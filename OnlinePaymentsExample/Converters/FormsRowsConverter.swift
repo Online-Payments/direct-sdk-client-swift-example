@@ -154,13 +154,8 @@ class FormRowsConverter {
     }
     
     func textFieldFormRow(from field: PaymentProductField, paymentItem: PaymentItem, value: String, isEnabled: Bool, confirmedPaymentProducts: Set<String>?, viewFactory: ViewFactory) -> FormRowTextField {
-        
-        var placeholderKey = "gc.general.paymentProducts.\(paymentItem.identifier).paymentProductFields.\(field.identifier).placeholder"
-        var placeholderValue = NSLocalizedString(placeholderKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-        if placeholderKey == placeholderValue {
-            placeholderKey = "gc.general.paymentProductFields.\(field.identifier).placeholder"
-            placeholderValue = NSLocalizedString(placeholderKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-        }
+        // Set placeholder for field
+        let placeholderValue = field.displayHints.placeholderLabel ?? "No placeholder found"
 
         let keyboardType: UIKeyboardType
         switch field.displayHints.preferredInputType {
@@ -183,7 +178,7 @@ class FormRowsConverter {
         
         if field.identifier == "cardNumber" {
             if let confirmedPaymentProducts = confirmedPaymentProducts, confirmedPaymentProducts.contains(paymentItem.identifier) {
-                row.logo = paymentItem.displayHints.logoImage
+                row.logo = paymentItem.displayHintsList.first?.logoImage ?? nil
             } else {
                 row.logo = nil
             }
@@ -195,13 +190,8 @@ class FormRowsConverter {
     }
     
     func currencyFormRow(from field: PaymentProductField, paymentItem: PaymentItem, value: String, isEnabled: Bool, viewFactory: ViewFactory) -> FormRowCurrency {
-
-        var placeholderKey = "gc.general.paymentProducts.\(paymentItem.identifier).paymentProductFields.\(field.identifier).placeholder"
-        var placeholderValue = NSLocalizedString(placeholderKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-        if placeholderKey == placeholderValue {
-            placeholderKey = "gc.general.paymentProductFields.\(field.identifier).placeholder"
-            placeholderValue = NSLocalizedString(placeholderKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-        }
+        // Set placeholder for field (response only returns empty placeholder labels)
+        let placeholderValue = field.displayHints.placeholderLabel ?? "No placeholder found"
 
         let keyboardType: UIKeyboardType
         switch field.displayHints.preferredInputType {
@@ -264,16 +254,14 @@ class FormRowsConverter {
     
     
     func setTooltipForFormRow(_ row: FormRowWithInfoButton, with field: PaymentProductField, paymentItem: PaymentItem) {
-        if field.displayHints.tooltip?.imagePath != nil {
+        // Only create a tooltip when the label is not empty
+        if let tooltipLabel = field.displayHints.tooltip?.label,
+               !tooltipLabel.isEmpty {
             let tooltip = FormRowTooltip()
-            var tooltipTextKey = "gc.general.paymentProducts.\(paymentItem.identifier).paymentProductFields.\(field.identifier).tooltipText"
-            var tooltipTextValue = NSLocalizedString(tooltipTextKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-            if tooltipTextKey == tooltipTextValue {
-                tooltipTextKey = "gc.general.paymentProductFields.\(field.identifier).tooltipText"
-                tooltipTextValue = NSLocalizedString(tooltipTextKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
+            tooltip.text = field.displayHints.tooltip?.label
+            if field.displayHints.tooltip?.imagePath != nil {
+                tooltip.image = field.displayHints.tooltip?.image
             }
-            tooltip.text = tooltipTextValue
-            tooltip.image = field.displayHints.tooltip?.image
             row.tooltip = tooltip
         }
     }
@@ -292,14 +280,7 @@ class FormRowsConverter {
     }
     
     func labelFormRow(from field: PaymentProductField, paymentProduct paymentProductId: String, viewFactory: ViewFactory) -> FormRowLabel {
-        var labelKey = "gc.general.paymentProducts.\(paymentProductId).paymentProductFields.\(field.identifier).label"
-        var labelValue = NSLocalizedString(labelKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-
-        if labelKey == labelValue {
-            labelKey = "gc.general.paymentProductFields.\(field.identifier).label"
-            labelValue = NSLocalizedString(labelKey, tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "")
-        }
-
+        let labelValue = field.displayHints.label ?? "No label found"
         return FormRowLabel(text: labelValue)
     }
     
