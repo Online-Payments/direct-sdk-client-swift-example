@@ -1,9 +1,9 @@
 PODS:
-  - Alamofire (4.9.1)
-  - CryptoSwift (0.12.0)
-  - OnlinePaymentsKit (2.0.1):
-    - Alamofire (~> 4.8)
-    - CryptoSwift (= 0.12.0)
+  - Alamofire (5.6.2)
+  - CryptoSwift (1.5.1)
+  - OnlinePaymentsKit (2.0.2):
+    - Alamofire (~> 5.6)
+    - CryptoSwift (~> 1.5)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
@@ -14,15 +14,14 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - CryptoSwift
-    - OnlinePaymentsKit
     - SVProgressHUD
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  CryptoSwift: 1c07ca50843dd48bc54e6ea53d7a4dba3b645716
-  OnlinePaymentsKit: 60cbc3a360f3556dd802aeab6fc52e9f66bf1057
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
+  OnlinePaymentsKit: 3822ea3c9387a2934404c2965b6d161633134581
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 1f204a33fc5280fd3a9f8d186802df1dc45d0fec
+PODFILE CHECKSUM: 54fcd92682d544dd24e9635a5acce4da47166271
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

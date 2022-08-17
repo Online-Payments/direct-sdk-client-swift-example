@@ -17,6 +17,14 @@
 
 "ConnectionErrorTitle" = "Connection error";
 
+"PaymentFailureTitle" = "Payment failure";
+
+"TechnicalProblemErrorExplanation" = "A technical error occurred while we were trying to process your payment. Please try again or try another payment method.";
+
+"FieldErrorTitle" = "Text field error";
+
+"FieldErrorClientSessionIdCustomerIdExplanation" = "We are unable to retrieve the input of the text fields. Please check that you have provided a client session identifier and customer identifier.";
+
 "RememberMyDetails" = "Remember my payment details for future purchases";
 
 "Pay" = "Pay";

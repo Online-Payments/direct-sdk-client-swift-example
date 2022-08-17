@@ -169,28 +169,21 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
         
         // ***************************************************************************
         //
-        // The summaryItems for the paymentRequest is a list of values with the last
-        // value being the total and having the name of the merchant as label.
+        // The summaryItems for the paymentRequest is a list of values with the only
+        // value being the subtotal. You are able to add more values to the list if
+        // desired, like a shipping cost and total. ApplePay expects the last summary
+        // item to be the grand total, this will be displayed differently from the
+        // other summary items.
         //
-        // A list of subtotal, shipping cost, and total is created below as example.
-        // The values are specified in cents and converted to a NSDecimalNumber with
+        // The value is specified in cents and converted to a NSDecimalNumber with
         // a exponent of -2.
         //
         // ***************************************************************************
         
         let subtotal = context.amountOfMoney.totalAmount
-        let shippingCost = 200
-        let total = subtotal + shippingCost
         
         var summaryItems = [PKPaymentSummaryItem]()
         summaryItems.append(PKPaymentSummaryItem(label: NSLocalizedString("gc.app.general.shoppingCart.subtotal", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "subtotal summary item title"), amount: NSDecimalNumber(mantissa: UInt64(subtotal), exponent: -2, isNegative: false)))
-        summaryItems.append(PKPaymentSummaryItem(label: NSLocalizedString("gc.app.general.shoppingCart.shippingCost", tableName: SDKConstants.kSDKLocalizable, bundle: AppConstants.sdkBundle, value: "", comment: "shipping cost summary item title"), amount: NSDecimalNumber(mantissa: UInt64(shippingCost), exponent: -2, isNegative: false)))
-        if #available(iOS 9.0, *) {
-            summaryItems.append(PKPaymentSummaryItem(label: "Merchant Name", amount: NSDecimalNumber(mantissa: UInt64(total), exponent: -2, isNegative: false), type: .final))
-        } else {
-            summaryItems.append(PKPaymentSummaryItem(label: "Merchant Name", amount: NSDecimalNumber(mantissa: UInt64(total), exponent: -2, isNegative: false)))
-        }
-        
         
         self.summaryItems = summaryItems
     }
@@ -253,7 +246,12 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
             }
 
             let request = PaymentRequest(paymentProduct: applePayPaymentProduct)
-            request.setValue(forField: "encryptedPaymentData", value: String(data: payment.token.paymentData, encoding: String.Encoding.utf8)!)
+            
+            guard let paymentDataString = String(data: payment.token.paymentData, encoding: String.Encoding.utf8) else {
+                completion(.failure)
+                return
+            }
+            request.setValue(forField: "encryptedPaymentData", value: paymentDataString)
             request.setValue(forField: "transactionId" , value: payment.token.transactionIdentifier)
 
             self.didSubmitPaymentRequest(request, success: {() -> Void in

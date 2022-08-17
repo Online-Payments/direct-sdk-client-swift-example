@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "OnlinePaymentsKit-Bridging-Swift.h"
 
 FOUNDATION_EXPORT double OnlinePaymentsKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char OnlinePaymentsKitVersionString[];
