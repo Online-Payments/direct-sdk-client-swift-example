@@ -105,7 +105,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate, 
         let amountAsNumber = (Double(amount) / Double(100)) as NSNumber
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
-        numberFormatter.currencyCode = context.amountOfMoney.currencyCode.rawValue
+        numberFormatter.currencyCode = context.amountOfMoney.currencyCodeString
         
         if let amountAsString = numberFormatter.string(from: amountAsNumber) {
             header.setAmount(amount: amountAsString)

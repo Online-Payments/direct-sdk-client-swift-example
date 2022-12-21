@@ -137,8 +137,8 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
         
         generateSummaryItems()
         let paymentRequest = PKPaymentRequest()
-        paymentRequest.countryCode = context.countryCode.rawValue
-        paymentRequest.currencyCode = context.amountOfMoney.currencyCode.rawValue
+        paymentRequest.countryCode = context.countryCodeString
+        paymentRequest.currencyCode = context.amountOfMoney.currencyCodeString
         paymentRequest.supportedNetworks = paymentProductNetworks.paymentProductNetworks
         paymentRequest.paymentSummaryItems = summaryItems
         
