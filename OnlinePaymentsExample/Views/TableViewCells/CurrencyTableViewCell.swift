@@ -7,7 +7,7 @@
 import UIKit
 
 class CurrencyTableViewCell: TableViewCell {
-    
+
     var integerTextField: IntegerTextField = IntegerTextField()
     var fractionalTextField: FractionalTextField = FractionalTextField()
 
@@ -27,7 +27,7 @@ class CurrencyTableViewCell: TableViewCell {
             fractionalTextField.delegate = newValue
         }
     }
-    
+
     var readonly: Bool = false {
         didSet {
             integerTextField.isEnabled = !readonly
@@ -67,17 +67,17 @@ class CurrencyTableViewCell: TableViewCell {
         separatorlabel.text = formatter.decimalSeparator!
         contentView.addSubview(separatorlabel)
         contentView.addSubview(currencyCodeLabel)
-        
+
         integerTextField.textAlignment = .right
-        
+
         addSubview(integerTextField)
         addSubview(fractionalTextField)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
 
@@ -94,7 +94,7 @@ class CurrencyTableViewCell: TableViewCell {
 
         separatorlabel.frame = CGRect(x: separatorX, y: 7, width: separatorWidth, height: 30)
         currencyCodeLabel.frame = CGRect(x: currencyCodeX, y: 7, width: currencyCodeWidth, height: 30)
-        
+
         integerTextField.frame = CGRect(x: integerX, y: 4, width: integerWidth, height: 36)
         fractionalTextField.frame = CGRect(x: fractionalX, y: 4, width: fractionalWidth, height: 36)
     }
@@ -105,7 +105,7 @@ class CurrencyTableViewCell: TableViewCell {
         fractionalField = nil
         delegate = nil
     }
-    
+
     deinit {
         integerTextField.endEditing(true)
         fractionalTextField.endEditing(true)

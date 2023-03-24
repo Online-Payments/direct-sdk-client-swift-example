@@ -11,5 +11,5 @@ class FormRowWithInfoButton: FormRow {
         return tooltip != nil
     }
     var tooltip: FormRowTooltip?
-    
+
 }

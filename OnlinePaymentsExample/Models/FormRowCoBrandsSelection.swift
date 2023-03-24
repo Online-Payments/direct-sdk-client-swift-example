@@ -7,5 +7,5 @@
 import Foundation
 
 class FormRowCoBrandsSelection: FormRow {
-    
+
 }

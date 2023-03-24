@@ -7,17 +7,12 @@
 import Foundation
 import OnlinePaymentsKit
 
-enum CurrencyRowType {
-    case integer
-    case fractional
-}
-
 class FormRowCurrency: FormRowWithInfoButton {
     var integerField: FormRowField
     var fractionalField: FormRowField
-    
+
     var paymentProductField: PaymentProductField
-    
+
     init(paymentProductField: PaymentProductField, integerField: FormRowField, fractionalField: FormRowField) {
         self.paymentProductField = paymentProductField
         self.integerField = integerField

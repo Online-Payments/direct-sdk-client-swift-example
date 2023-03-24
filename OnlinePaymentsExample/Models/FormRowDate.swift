@@ -7,15 +7,15 @@
 import Foundation
 import OnlinePaymentsKit
 
-class FormRowDate : FormRow {
-    
+class FormRowDate: FormRow {
+
     var paymentProductField: PaymentProductField
     var date: Date
     init(paymentProductField field: PaymentProductField, value: String) {
         if value != "" {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyyMMdd"
-            
+
             date = formatter.date(from: value) ?? Date()
 
         } else {
@@ -24,5 +24,5 @@ class FormRowDate : FormRow {
 
         self.paymentProductField = field
     }
-    
+
 }

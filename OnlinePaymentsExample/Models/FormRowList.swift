@@ -10,7 +10,7 @@ class FormRowList: FormRow {
     var items = [ValueMappingItem]()
     var selectedRow = 0
     var paymentProductField: PaymentProductField
-    
+
     init(paymentProductField: PaymentProductField) {
         self.paymentProductField = paymentProductField
     }

@@ -13,7 +13,7 @@ struct FormRowField {
     var keyboardType: UIKeyboardType
     var isSecure: Bool
 
-    init(text: String, placeholder: String, keyboardType: UIKeyboardType, isSecure: Bool){
+    init(text: String, placeholder: String, keyboardType: UIKeyboardType, isSecure: Bool) {
         self.text = text
         self.placeholder = placeholder
         self.keyboardType = keyboardType
@@ -25,7 +25,7 @@ class FormRowTextField: FormRowWithInfoButton {
     var paymentProductField: PaymentProductField
     var logo: UIImage?
     var field: FormRowField
-    
+
     init(paymentProductField: PaymentProductField, field: FormRowField) {
         self.paymentProductField = paymentProductField
         self.field = field

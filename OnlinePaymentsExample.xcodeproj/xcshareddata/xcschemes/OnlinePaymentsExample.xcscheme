@@ -28,16 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F7E8356524D9793A005ACD25"
-               BuildableName = "OnlinePaymentsExampleTests.xctest"
-               BlueprintName = "OnlinePaymentsExampleTests"
-               ReferencedContainer = "container:OnlinePaymentsExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
