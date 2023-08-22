@@ -16,10 +16,11 @@ class AppConstants {
     static let kClientSessionId = "kClientSessionId"
     static let kCustomerId = "kCustomerId"
     static let kMerchantId = "kMerchantId"
-    static let kApplicationIdentifier = "Swift Example Application/v2.0.4"
+    static let kApplicationIdentifier = "Swift Example Application/v2.1.0"
     static let kBaseURL = "kBaseURL"
     static let kAssetsBaseURL = "kAssetsBaseURL"
     static let kPrice = "kPrice"
     static let kCurrency = "kCurrency"
     static let kCountryCode = "kCountryCode"
+    static let kApplePayIdentifier = "302"
 }

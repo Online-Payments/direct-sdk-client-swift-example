@@ -36,7 +36,6 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
     init(paymentItem: PaymentItem, session: Session, context: PaymentContext, accountOnFile: AccountOnFile?) {
         super.init(style: .plain)
         self.paymentItem = paymentItem
-        context.forceBasicFlow = true
         self.session = session
         self.context = context
         self.amount = context.amountOfMoney.totalAmount
@@ -812,7 +811,10 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
         var valid = false
         inputData.validate()
         if inputData.errors.count == 0 {
-            let paymentRequest = inputData.paymentRequest()
+            inputData.createPaymentRequest()
+
+            let paymentRequest = inputData.paymentRequest
+
             paymentRequest.validate()
             if paymentRequest.errors.count == 0 {
                 valid = true

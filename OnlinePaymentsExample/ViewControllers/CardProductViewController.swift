@@ -328,10 +328,7 @@ class CardProductViewController: PaymentProductViewController {
                         comment: ""
                     )
                 row.name = paymentProductValue
-
-                let assetManager = AssetManager()
-                let logo = assetManager.logoImage(forItem: id)
-                row.logo = logo
+                row.logo = self.paymentItem.displayHintsList.first?.logoImage
 
                 formRows.append(row)
             }

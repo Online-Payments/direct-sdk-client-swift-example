@@ -610,34 +610,6 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         }
     }
 
-    private func checkURL(url: String) -> Bool {
-        if var finalComponents = URLComponents(string: url) {
-            var components = finalComponents.path.split(separator: "/").map { String($0)}
-            let versionComponents = (SDKConstants.kApiVersion as NSString).pathComponents
-
-            switch components.count {
-            case 0:
-                break
-            case 1:
-                if components[0] != versionComponents[0] {
-                    return false
-                }
-            case 2:
-                if components[0] != versionComponents[0] {
-                    return false
-                }
-                if components[1] != versionComponents[1] {
-                    return false
-                }
-            default:
-                return false
-            }
-            return true
-        }
-        return false
-
-    }
-
     // MARK: - Button actions
 
     @objc func buyButtonTapped(_ sender: UIButton) {
@@ -695,35 +667,6 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
             UserDefaults.standard.set(merchantId, forKey: AppConstants.kMerchantId)
         }
         let baseURL = baseURLTextField.text
-        guard checkURL(url: baseURL ?? "") else {
-            let alert =
-                UIAlertController(
-                    title:
-                        NSLocalizedString(
-                            "ConnectionErrorTitle",
-                            tableName: AppConstants.kAppLocalizable,
-                            bundle: AppConstants.appBundle,
-                            value: "",
-                            comment: ""
-                        ),
-                    message:
-                        NSLocalizedString(
-                            """
-                            This version of the connectSDK is only compatible with \(SDKConstants.kApiVersion),
-                            you supplied: '\(NSURL(string: baseURL ?? "")?.path ?? "an invalid URL")'
-                            """,
-                            tableName: AppConstants.kAppLocalizable,
-                            bundle: AppConstants.appBundle,
-                            value: "",
-                            comment: ""
-                        ),
-                    preferredStyle: .alert
-                )
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            SVProgressHUD.dismiss()
-            return
-        }
         UserDefaults.standard[AppConstants.kBaseURL] = baseURL
 
         let assetBaseURL = assetsBaseURLTextField.text
@@ -731,7 +674,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
 
         // ***************************************************************************
         //
-        // The GlobalCollect SDK supports processing payments with instances of the
+        // The Online Payments SDK supports processing payments with instances of the
         // Session class. The code below shows how such an instance chould be
         // instantiated.
         //
@@ -742,6 +685,15 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         // instead of the factory method used below if you want to replace any of the
         // supporting objects.
         //
+        // You can log requests made to the server and responses received from the server
+        // by passing the `loggingEnabled` parameter to the Session constructor.
+        // In the constructor below, the logging is disabled.
+        // You are also able to disable / enable logging at a later stage
+        // by calling `session.loggingEnabled = `, as shown below.
+        // Logging should be disabled in production.
+        // To use logging in debug, but not in production, you can set `loggingEnabled` within a DEBUG flag.
+        // If you use the DEBUG flag, you can take a look at this app's build settings
+        // to see the setup you should apply to your own app.
         // ***************************************************************************
 
         session =
@@ -750,8 +702,13 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
                 customerId: customerId,
                 baseURL: baseURL ?? "",
                 assetBaseURL: assetBaseURL ?? "",
-                appIdentifier: AppConstants.kApplicationIdentifier
+                appIdentifier: AppConstants.kApplicationIdentifier,
+                loggingEnabled: false
             )
+
+        #if DEBUG
+            session?.loggingEnabled = true
+        #endif
 
         guard let countryCode = countryCodeTextField.text,
               let currencyCode = currencyCodeTextField.text else {

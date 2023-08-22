@@ -76,7 +76,7 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
             withId: paymentItem.identifier,
             context: context,
             success: {(_ paymentProduct: PaymentProduct) -> Void in
-                if paymentItem.identifier.isEqual(SDKConstants.kApplePayIdentifier) {
+                if paymentItem.identifier.isEqual(AppConstants.kApplePayIdentifier) {
                     self.showApplePayPaymentItem(paymentProduct: paymentProduct)
                 } else {
                     SVProgressHUD.dismiss()
@@ -170,7 +170,7 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
             // ***************************************************************************
 
             session.paymentProductNetworks(
-                forProductId: SDKConstants.kApplePayIdentifier,
+                forProductId: AppConstants.kApplePayIdentifier,
                 context: context,
                 success: {(_ paymentProductNetworks: PaymentProductNetworks) -> Void in
                     self.showApplePaySheet(for: paymentProduct, withAvailableNetworks: paymentProductNetworks)
@@ -207,7 +207,8 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
     }
 
     private func systemVersionIsGreaterThan(version: String) -> Bool {
-        return UIDevice.current.systemVersion.compare(version, options: String.CompareOptions.numeric) != .orderedAscending
+        return
+            UIDevice.current.systemVersion.compare(version, options: String.CompareOptions.numeric) != .orderedAscending
     }
 
     func showApplePaySheet(

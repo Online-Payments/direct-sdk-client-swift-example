@@ -4,7 +4,7 @@ platform :ios, '13.0'
 target 'OnlinePaymentsExample' do
   use_frameworks!
 
-  pod 'OnlinePaymentsKit', '~> 2.0'
+  pod 'OnlinePaymentsKit', '~> 2.1'
 
   pod 'SVProgressHUD'
 

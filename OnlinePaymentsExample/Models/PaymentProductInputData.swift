@@ -13,14 +13,15 @@ class PaymentProductInputData {
     var tokenize = false
     var errors = NSMutableArray()
     var fieldValues = [String: String]()
-    var formatter = StringFormatter()
+    let formatter = StringFormatter()
+    var paymentRequest = PaymentRequest()
 
-    func paymentRequest() -> PaymentRequest {
+    func createPaymentRequest() {
         guard let paymentItem = paymentItem as? PaymentProduct else {
             fatalError("Invalid paymentItem")
         }
 
-        let paymentRequest =
+        paymentRequest =
             PaymentRequest(paymentProduct: paymentItem, accountOnFile: accountOnFile, tokenize: self.tokenize)
 
         let keys = Array(fieldValues.keys)
@@ -30,8 +31,6 @@ class PaymentProductInputData {
                 paymentRequest.setValue(forField: key, value: value)
             }
         }
-
-        return paymentRequest
     }
 
     func setValue(value: String, forField paymentProductFieldId: String) {
@@ -91,44 +90,38 @@ class PaymentProductInputData {
     func validateExcept(fieldNames exceptFieldNames: Set<String>) {
         errors.removeAllObjects()
 
-        let request = self.paymentRequest()
         let paymentProductFields = paymentItem.fields.paymentProductFields
         for field in paymentProductFields where !fieldIsPartOfAccountOnFile(paymentProductFieldId: field.identifier) {
             if self.unmaskedValue(forField: field.identifier) == "" {
-                let validators = field.dataRestrictions.validators.validators
-                var hasFixedValidator = false
-                for validator in validators {
-                    if let fixedListValidator = validator as? ValidatorFixedList {
-                        hasFixedValidator = true
-                        let value = fixedListValidator.allowedValues[0]
-                        setValue(value: value, forField: field.identifier)
-                    }
-                }
-                // It's not possible to choose an empty string with a date picker
-                // If not set, we assume the first is chosen
-                if !hasFixedValidator && field.type == .dateString {
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyyMMdd"
-                    setValue(value: formatter.string(from: Date()), forField: field.identifier)
-                }
-
-                // It's not possible to choose an empty boolean with a switch
-                // If not set, we assume false is chosen
-                if !hasFixedValidator && field.type == .boolString {
-                    setValue(value: "false", forField: field.identifier)
-                }
+                self.setDefaultValue(for: field)
             }
 
             if exceptFieldNames.contains(field.identifier) {
                 continue
             }
             let fieldValue = self.unmaskedValue(forField: field.identifier )
-            field.validateValue(value: fieldValue, for: request)
+            field.validateValue(value: fieldValue, for: paymentRequest)
             errors.addObjects(from: field.errors)
         }
     }
 
     func validate() {
         self.validateExcept(fieldNames: Set())
+    }
+
+    private func setDefaultValue(for field: PaymentProductField) {
+        // It's not possible to choose an empty string with a date picker
+        // If not set, we assume the first is chosen
+        if field.type == .dateString {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyyMMdd"
+            setValue(value: formatter.string(from: Date()), forField: field.identifier)
+        }
+
+        // It's not possible to choose an empty boolean with a switch
+        // If not set, we assume false is chosen
+        if field.type == .boolString {
+            setValue(value: "false", forField: field.identifier)
+        }
     }
 }
