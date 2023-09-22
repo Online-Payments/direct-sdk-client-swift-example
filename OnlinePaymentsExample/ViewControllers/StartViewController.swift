@@ -753,7 +753,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         // only illustrates a possible payment product selection screen.
         //
         // ***************************************************************************
-        let amountOfMoney = PaymentAmountOfMoney(totalAmount: amountValue, currencyCode: currencyCode)
+        let amountOfMoney = AmountOfMoney(totalAmount: amountValue, currencyCode: currencyCode)
         context = PaymentContext(amountOfMoney: amountOfMoney, isRecurring: isRecurring, countryCode: countryCode)
 
         guard let context = context else {
