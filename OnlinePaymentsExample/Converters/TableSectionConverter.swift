@@ -52,8 +52,8 @@ class TableSectionConverter {
         for paymentItem in paymentItems.paymentItems.sorted(by: { (paymentItemOne, paymentItemTwo) -> Bool in
             if paymentItemOne.displayHintsList.isEmpty == false && paymentItemTwo.displayHintsList.isEmpty == false {
                 return
-                    paymentItemOne.displayHintsList[0].displayOrder ?? Int.max <
-                        paymentItemTwo.displayHintsList[0].displayOrder ?? Int.max
+                    paymentItemOne.displayHintsList[0].displayOrder <
+                        paymentItemTwo.displayHintsList[0].displayOrder
             }
             return paymentItemOne.identifier < paymentItemTwo.identifier
         }) {

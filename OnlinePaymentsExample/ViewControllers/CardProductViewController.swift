@@ -58,7 +58,7 @@ class CardProductViewController: PaymentProductViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let row = formRows[indexPath.row]
 
-        if (row is FormRowCoBrandsExplanation || row is PaymentProductsTableRow), !row.isEnabled {
+        if (row is FormRowCoBrandsExplanation || row is PaymentProductsTableRow) && !row.isEnabled {
             return 0
         } else if row is FormRowCoBrandsExplanation {
             let cellString = COBrandsExplanationTableViewCell.cellString()
@@ -254,7 +254,8 @@ class CardProductViewController: PaymentProductViewController {
 
                         self.switchToPaymentProduct(response: response)
                     },
-                    failure: { _ in }
+                    failure: { _ in },
+                    apiFailure: { _ in }
                 )
             } else if unmasked.count < 6 {
                 self.removeCoBrands()

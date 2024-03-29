@@ -122,7 +122,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
         let amountAsNumber = (Double(amount) / Double(100)) as NSNumber
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
-        numberFormatter.currencyCode = context.amountOfMoney.currencyCodeString
+        numberFormatter.currencyCode = context.amountOfMoney.currencyCode
 
         if let amountAsString = numberFormatter.string(from: amountAsNumber) {
             header.setAmount(amount: amountAsString)
@@ -275,7 +275,8 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
                     self.updateFormRows()
                     self.switching = false
                 },
-                failure: { _ in }
+                failure: { _ in },
+                apiFailure: { _ in }
             )
         }
     }
@@ -340,7 +341,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
         cell.accessoryType = row.showInfoButton ? .detailButton : .none
         cell.readonly = !row.isEnabled
         cell.field = row.field
-        if let error = row.paymentProductField.errors.first {
+        if let error = row.paymentProductField.errorMessageIds.first {
             cell.error =
                 FormRowsConverter.errorMessage(
                     for: error,
@@ -411,7 +412,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
         cell.attributedTitle = row.title
         cell.readonly = !row.isEnabled
         cell.accessoryType = row.showInfoButton ? .detailButton : .none
-        if let error = row.field?.errors.first, validation {
+        if let error = row.field?.errorMessageIds.first, validation {
             cell.errorMessage = FormRowsConverter.errorMessage(for: error, withCurrency: false)
         }
 
@@ -517,7 +518,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
         } else if row is FormRowButton {
             return 52
         } else if let row = row as? FormRowTextField,
-                    let error = row.paymentProductField.errors.first {
+                    let error = row.paymentProductField.errorMessageIds.first {
             return self.getTextFieldErrorRowHeight(tableView: tableView, row: row, error: error)
         } else if let row = row as? FormRowSwitch {
             return self.getSwitchRowHeight(tableView: tableView, row: row)
@@ -558,7 +559,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
             width -= 48
         }
         var errorHeight: CGFloat = 0
-        if let firstError = row.field?.errors.first, validation {
+        if let firstError = row.field?.errorMessageIds.first, validation {
             let str =
                 NSAttributedString(string: FormRowsConverter.errorMessage(for: firstError, withCurrency: false))
             errorHeight =
@@ -815,8 +816,8 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
 
             let paymentRequest = inputData.paymentRequest
 
-            paymentRequest.validate()
-            if paymentRequest.errors.count == 0 {
+            let errorMessageIds = paymentRequest.validate()
+            if errorMessageIds.count == 0 {
                 valid = true
                 paymentRequestTarget?.didSubmitPaymentRequest(paymentRequest: paymentRequest)
             }
@@ -836,7 +837,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
             return
         }
 
-        if let error = field.errors.first {
+        if let error = field.errorMessageIds.first {
             cell.errorMessage = FormRowsConverter.errorMessage(for: error, withCurrency: false)
         } else {
             cell.errorMessage = nil

@@ -94,30 +94,37 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
                 }
             },
             failure: { _ in
-                SVProgressHUD.dismiss()
-                let alert =
-                    UIAlertController(
-                        title:
-                            NSLocalizedString(
-                                "ConnectionErrorTitle",
-                                tableName: AppConstants.kAppLocalizable,
-                                bundle: AppConstants.appBundle,
-                                value: "",
-                                comment: "Title of the connection error dialog."
-                            ),
-                        message: NSLocalizedString(
-                            "PaymentProductErrorExplanation",
-                            tableName: AppConstants.kAppLocalizable,
-                            bundle: AppConstants.appBundle,
-                            value: "",
-                            comment: ""
-                        ),
-                        preferredStyle: .alert
-                    )
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.navigationController.topViewController?.present(alert, animated: true, completion: nil)
+                self.showPaymentProductErrorDialog()
+            },
+            apiFailure: { _ in
+                self.showPaymentProductErrorDialog()
             }
         )
+    }
+
+    private func showPaymentProductErrorDialog() {
+        SVProgressHUD.dismiss()
+        let alert =
+            UIAlertController(
+                title:
+                    NSLocalizedString(
+                        "ConnectionErrorTitle",
+                        tableName: AppConstants.kAppLocalizable,
+                        bundle: AppConstants.appBundle,
+                        value: "",
+                        comment: "Title of the connection error dialog."
+                    ),
+                message: NSLocalizedString(
+                    "PaymentProductErrorExplanation",
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
+                    value: "",
+                    comment: ""
+                ),
+                preferredStyle: .alert
+            )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.navigationController.topViewController?.present(alert, animated: true, completion: nil)
     }
 
     func show(paymentItem: PaymentItem, accountOnFile: AccountOnFile?) {
@@ -177,33 +184,40 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
                     SVProgressHUD.dismiss()
                 },
                 failure: { _ in
-                    SVProgressHUD.dismiss()
-
-                    let alert =
-                        UIAlertController(
-                            title:
-                                NSLocalizedString(
-                                    "ConnectionErrorTitle",
-                                    tableName: AppConstants.kAppLocalizable,
-                                    bundle: AppConstants.appBundle,
-                                    value: "",
-                                    comment: "Title of the connection error dialog."
-                                ),
-                            message:
-                                NSLocalizedString(
-                                    "PaymentProductNetworksErrorExplanation",
-                                    tableName: AppConstants.kAppLocalizable,
-                                    bundle: AppConstants.appBundle,
-                                    value: "",
-                                    comment: ""
-                                ),
-                            preferredStyle: .alert
-                        )
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.navigationController.topViewController?.present(alert, animated: true, completion: nil)
+                    self.showPaymentProductNetworksErrorDialog()
+                },
+                apiFailure: { _ in
+                    self.showPaymentProductNetworksErrorDialog()
                 }
             )
         }
+    }
+
+    private func showPaymentProductNetworksErrorDialog() {
+        SVProgressHUD.dismiss()
+
+        let alert =
+            UIAlertController(
+                title:
+                    NSLocalizedString(
+                        "ConnectionErrorTitle",
+                        tableName: AppConstants.kAppLocalizable,
+                        bundle: AppConstants.appBundle,
+                        value: "",
+                        comment: "Title of the connection error dialog."
+                    ),
+                message:
+                    NSLocalizedString(
+                        "PaymentProductNetworksErrorExplanation",
+                        tableName: AppConstants.kAppLocalizable,
+                        bundle: AppConstants.appBundle,
+                        value: "",
+                        comment: ""
+                    ),
+                preferredStyle: .alert
+            )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.navigationController.topViewController?.present(alert, animated: true, completion: nil)
     }
 
     private func systemVersionIsGreaterThan(version: String) -> Bool {
@@ -227,8 +241,8 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
 
         generateSummaryItems()
         let paymentRequest = PKPaymentRequest()
-        paymentRequest.countryCode = context.countryCodeString
-        paymentRequest.currencyCode = context.amountOfMoney.currencyCodeString
+        paymentRequest.countryCode = context.countryCode
+        paymentRequest.currencyCode = context.amountOfMoney.currencyCode
         paymentRequest.supportedNetworks = paymentProductNetworks.paymentProductNetworks
         paymentRequest.paymentSummaryItems = summaryItems
 
@@ -303,10 +317,15 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
     // MARK: Payment request target
 
     func didSubmitPaymentRequest(paymentRequest: PaymentRequest) {
-        didSubmitPaymentRequest(paymentRequest, success: nil, failure: nil)
+        didSubmitPaymentRequest(paymentRequest, success: nil, failure: nil, apiFailure: nil)
     }
 
-    func didSubmitPaymentRequest(_ paymentRequest: PaymentRequest, success: (() -> Void)?, failure: (() -> Void)?) {
+    func didSubmitPaymentRequest(
+        _ paymentRequest: PaymentRequest,
+        success: (() -> Void)?,
+        failure: (() -> Void)?,
+        apiFailure: (() -> Void)?
+    ) {
         SVProgressHUD.setDefaultMaskType(.clear)
         let status =
             NSLocalizedString(
@@ -318,46 +337,56 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
             )
         SVProgressHUD.show(withStatus: status)
 
-        self.session.prepare(paymentRequest, success: {(_ preparedPaymentRequest: PreparedPaymentRequest) -> Void in
-            SVProgressHUD.dismiss()
+        self.session.prepare(
+            paymentRequest,
+            success: {(_ preparedPaymentRequest: PreparedPaymentRequest) -> Void in
+                SVProgressHUD.dismiss()
 
-            // ***************************************************************************
-            //
-            // The information contained in `preparedPaymentRequest.encryptedFields` should
-            // be provided via the S2S Create Payment API, using field `encryptedCustomerInput`.
-            //
-            // ***************************************************************************
-            self.paymentFinishedTarget?.didFinishPayment()
-            success?()
-        }, failure: { _ in
-            SVProgressHUD.dismiss()
-            let alert =
-                UIAlertController(
-                    title:
-                        NSLocalizedString(
-                        "ConnectionErrorTitle",
+                // ***************************************************************************
+                //
+                // The information contained in `preparedPaymentRequest.encryptedFields` should
+                // be provided via the S2S Create Payment API, using field `encryptedCustomerInput`.
+                //
+                // ***************************************************************************
+                self.paymentFinishedTarget?.didFinishPayment()
+                success?()
+            }, failure: { _ in
+                self.showSubmitErrorDialog()
+
+                failure?()
+            },
+            apiFailure: { _ in
+                self.showSubmitErrorDialog()
+
+                apiFailure?()
+            }
+        )
+    }
+
+    private func showSubmitErrorDialog() {
+        SVProgressHUD.dismiss()
+        let alert =
+            UIAlertController(
+                title:
+                    NSLocalizedString(
+                    "ConnectionErrorTitle",
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
+                    value: "",
+                    comment: "Title of the connection error dialog."
+                    ),
+                message:
+                    NSLocalizedString(
+                        "SubmitErrorExplanation",
                         tableName: AppConstants.kAppLocalizable,
                         bundle: AppConstants.appBundle,
                         value: "",
-                        comment: "Title of the connection error dialog."
-                        ),
-                    message:
-                        NSLocalizedString(
-                            "SubmitErrorExplanation",
-                            tableName: AppConstants.kAppLocalizable,
-                            bundle: AppConstants.appBundle,
-                            value: "",
-                            comment: ""
-                        ),
-                    preferredStyle: .alert
-                )
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.navigationController.topViewController?.present(alert, animated: true, completion: nil)
-
-            if failure != nil {
-                failure!()
-            }
-        })
+                        comment: ""
+                    ),
+                preferredStyle: .alert
+            )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.navigationController.topViewController?.present(alert, animated: true, completion: nil)
     }
 
     func didCancelPaymentRequest() {
@@ -397,11 +426,18 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
                 request.setValue(forField: "encryptedPaymentData", value: paymentDataString)
                 request.setValue(forField: "transactionId", value: payment.token.transactionIdentifier)
 
-                self.didSubmitPaymentRequest(request, success: {() -> Void in
-                    completion(.success)
-                }, failure: {() -> Void in
-                    completion(.failure)
-                })
+                self.didSubmitPaymentRequest(
+                    request,
+                    success: {
+                        completion(.success)
+                    },
+                    failure: {
+                        completion(.failure)
+                    },
+                    apiFailure: {
+                        completion(.failure)
+                    }
+                )
             }
         )
     }

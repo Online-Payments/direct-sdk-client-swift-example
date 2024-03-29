@@ -100,8 +100,8 @@ class PaymentProductInputData {
                 continue
             }
             let fieldValue = self.unmaskedValue(forField: field.identifier )
-            field.validateValue(value: fieldValue, for: paymentRequest)
-            errors.addObjects(from: field.errors)
+            let errorMessageIds = field.validateValue(value: fieldValue)
+            errors.addObjects(from: errorMessageIds)
         }
     }
 

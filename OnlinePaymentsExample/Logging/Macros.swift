@@ -6,8 +6,8 @@
 
 import Foundation
 
-public class Macros: NSObject {
-    public static func DLog(message: String, functionName: String = #function, fileName: String = #file) {
+class Macros: NSObject {
+    static func DLog(message: String, functionName: String = #function, fileName: String = #file) {
         #if DEBUG
         print(
             """

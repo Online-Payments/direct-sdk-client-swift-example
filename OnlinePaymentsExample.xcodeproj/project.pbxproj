@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7B80C4C229A3A4D600457711 /* ValidationErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B80C4C129A3A4D600457711 /* ValidationErrorExtension.swift */; };
 		7BF5CC3B2A14F29300753D6B /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5CC3A2A14F29300753D6B /* Macros.swift */; };
 		BBBA89D21D881845A3A92E4D /* Pods_OnlinePaymentsExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B29614BEFF74027DD122C76 /* Pods_OnlinePaymentsExample.framework */; };
 		F7E8355424D97936005ACD25 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E8355324D97936005ACD25 /* AppDelegate.swift */; };
@@ -73,7 +72,6 @@
 		00E2DB98C748D5C4925834C2 /* Pods-OnlinePaymentsExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnlinePaymentsExample.release.xcconfig"; path = "Target Support Files/Pods-OnlinePaymentsExample/Pods-OnlinePaymentsExample.release.xcconfig"; sourceTree = "<group>"; };
 		2B29614BEFF74027DD122C76 /* Pods_OnlinePaymentsExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnlinePaymentsExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D96E28E555E712EBAE20A74 /* Pods-OnlinePaymentsExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnlinePaymentsExample.debug.xcconfig"; path = "Target Support Files/Pods-OnlinePaymentsExample/Pods-OnlinePaymentsExample.debug.xcconfig"; sourceTree = "<group>"; };
-		7B80C4C129A3A4D600457711 /* ValidationErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationErrorExtension.swift; sourceTree = "<group>"; };
 		7BF5CC3A2A14F29300753D6B /* Macros.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
 		8046582515EBD0CA5A952D63 /* Pods-OnlinePaymentsExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnlinePaymentsExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-OnlinePaymentsExampleTests/Pods-OnlinePaymentsExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BD978D340EC0D5C55704FA8C /* Pods-OnlinePaymentsExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnlinePaymentsExampleTests.release.xcconfig"; path = "Target Support Files/Pods-OnlinePaymentsExampleTests/Pods-OnlinePaymentsExampleTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -275,7 +273,6 @@
 			children = (
 				F7E8358324D983DB005ACD25 /* FormsRowsConverter.swift */,
 				F7E8358524D98401005ACD25 /* TableSectionConverter.swift */,
-				7B80C4C129A3A4D600457711 /* ValidationErrorExtension.swift */,
 			);
 			path = Converters;
 			sourceTree = "<group>";
@@ -520,7 +517,6 @@
 				7BF5CC3B2A14F29300753D6B /* Macros.swift in Sources */,
 				F7E835EA24D9A5B6005ACD25 /* IntegerTextField.swift in Sources */,
 				F7E835C424D99AAF005ACD25 /* StartViewController.swift in Sources */,
-				7B80C4C229A3A4D600457711 /* ValidationErrorExtension.swift in Sources */,
 				F7E8360824D9A913005ACD25 /* COBrandsExplanationTableViewCell.swift in Sources */,
 				F7E8361224D9A913005ACD25 /* TextFieldTableViewCell.swift in Sources */,
 				F7E8359224D996DB005ACD25 /* PaymentFinishedTarget.swift in Sources */,
@@ -636,7 +632,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -690,7 +686,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -709,7 +705,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = OnlinePaymentsExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -731,7 +727,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = OnlinePaymentsExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

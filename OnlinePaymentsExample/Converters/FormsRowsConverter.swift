@@ -117,8 +117,8 @@ class FormRowsConverter {
                 errorMessageValueWithPlaceholders.replacingOccurrences(of: "{maxValue}", with: String(maxString))
             errorMessage =
                 errorMessageValueWithPlaceholder.replacingOccurrences(of: "{minValue}", with: String(minString))
-        } else if let errorMessageFromClass = errorClass.errorMessageKey() {
-            errorMessageKey = String(format: errorMessageFormat, errorMessageFromClass)
+        } else if !errorClass.errorMessage.isEmpty {
+            errorMessageKey = String(format: errorMessageFormat, errorClass.errorMessage)
             errorMessageValue =
                 NSLocalizedString(
                     errorMessageKey,
@@ -262,25 +262,7 @@ class FormRowsConverter {
                 paymentItem.identifier,
                 field.identifier
             )
-        let labelValue =
-            NSLocalizedString(
-                labelKey,
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
-                value: "",
-                comment: ""
-            )
-        let nsDescriptionValue = descriptionValue as NSString
-        let range = nsDescriptionValue.range(of: "{link}")
         let attrString = NSMutableAttributedString(string: descriptionValue)
-        let linkString =
-            NSAttributedString(
-                string: labelValue,
-                attributes: [NSAttributedString.Key.link: (field.displayHints.link?.absoluteString ?? "")]
-            )
-        if range.length > 0 {
-            attrString.replaceCharacters(in: range, with: linkString)
-        }
 
         let row =
             FormRowSwitch(
@@ -307,9 +289,6 @@ class FormRowsConverter {
                !tooltipLabel.isEmpty {
             let tooltip = FormRowTooltip()
             tooltip.text = field.displayHints.tooltip?.label
-            if field.displayHints.tooltip?.imagePath != nil {
-                tooltip.image = field.displayHints.tooltip?.image
-            }
             row.tooltip = tooltip
         }
     }

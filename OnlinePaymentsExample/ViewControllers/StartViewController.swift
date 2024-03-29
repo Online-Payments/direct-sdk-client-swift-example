@@ -792,31 +792,38 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
                 self.showPaymentProductSelection(paymentItems)
             },
             failure: { _ in
-                SVProgressHUD.dismiss()
-                let alert =
-                    UIAlertController(
-                        title:
-                            NSLocalizedString(
-                                "ConnectionErrorTitle",
-                                tableName: AppConstants.kAppLocalizable,
-                                bundle: AppConstants.appBundle,
-                                value: "",
-                                comment: ""
-                            ),
-                        message:
-                            NSLocalizedString(
-                                "PaymentProductsErrorExplanation",
-                                tableName: AppConstants.kAppLocalizable,
-                                bundle: AppConstants.appBundle,
-                                value: "",
-                                comment: ""
-                            ),
-                        preferredStyle: .alert
-                    )
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                self.showPaymentProductsErrorDialog()
+            },
+            apiFailure: { _ in
+                self.showPaymentProductsErrorDialog()
             }
         )
+    }
+
+    private func showPaymentProductsErrorDialog() {
+        SVProgressHUD.dismiss()
+        let alert =
+            UIAlertController(
+                title:
+                    NSLocalizedString(
+                        "ConnectionErrorTitle",
+                        tableName: AppConstants.kAppLocalizable,
+                        bundle: AppConstants.appBundle,
+                        value: "",
+                        comment: ""
+                    ),
+                message:
+                    NSLocalizedString(
+                        "PaymentProductsErrorExplanation",
+                        tableName: AppConstants.kAppLocalizable,
+                        bundle: AppConstants.appBundle,
+                        value: "",
+                        comment: ""
+                    ),
+                preferredStyle: .alert
+            )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     func showPaymentProductSelection(_ paymentItems: PaymentItems) {
@@ -831,7 +838,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
             let paymentProductSelection = PaymentProductsViewController(style: .grouped, paymentItems: paymentItems)
             paymentProductSelection.target = paymentProductsViewControllerTarget
             paymentProductSelection.amount = amountValue
-            paymentProductSelection.currencyCode = context.amountOfMoney.currencyCodeString
+            paymentProductSelection.currencyCode = context.amountOfMoney.currencyCode
             navigationController!.pushViewController(paymentProductSelection, animated: true)
             SVProgressHUD.dismiss()
         }
