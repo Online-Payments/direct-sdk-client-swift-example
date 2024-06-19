@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7BF5CC3B2A14F29300753D6B /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5CC3A2A14F29300753D6B /* Macros.swift */; };
-		BBBA89D21D881845A3A92E4D /* Pods_OnlinePaymentsExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B29614BEFF74027DD122C76 /* Pods_OnlinePaymentsExample.framework */; };
+		BF3EC1732BBD868C000C0032 /* OnlinePaymentsKit in Frameworks */ = {isa = PBXBuildFile; productRef = BF3EC1722BBD868C000C0032 /* OnlinePaymentsKit */; };
+		BF7E714B2BBE86EC00AEFE22 /* SVProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = BF7E714A2BBE86EC00AEFE22 /* SVProgressHUD */; };
 		F7E8355424D97936005ACD25 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E8355324D97936005ACD25 /* AppDelegate.swift */; };
 		F7E8355D24D9793A005ACD25 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7E8355C24D9793A005ACD25 /* Assets.xcassets */; };
 		F7E8356024D9793A005ACD25 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7E8355E24D9793A005ACD25 /* LaunchScreen.storyboard */; };
@@ -69,12 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		00E2DB98C748D5C4925834C2 /* Pods-OnlinePaymentsExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnlinePaymentsExample.release.xcconfig"; path = "Target Support Files/Pods-OnlinePaymentsExample/Pods-OnlinePaymentsExample.release.xcconfig"; sourceTree = "<group>"; };
-		2B29614BEFF74027DD122C76 /* Pods_OnlinePaymentsExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnlinePaymentsExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D96E28E555E712EBAE20A74 /* Pods-OnlinePaymentsExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnlinePaymentsExample.debug.xcconfig"; path = "Target Support Files/Pods-OnlinePaymentsExample/Pods-OnlinePaymentsExample.debug.xcconfig"; sourceTree = "<group>"; };
 		7BF5CC3A2A14F29300753D6B /* Macros.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
-		8046582515EBD0CA5A952D63 /* Pods-OnlinePaymentsExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnlinePaymentsExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-OnlinePaymentsExampleTests/Pods-OnlinePaymentsExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		BD978D340EC0D5C55704FA8C /* Pods-OnlinePaymentsExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnlinePaymentsExampleTests.release.xcconfig"; path = "Target Support Files/Pods-OnlinePaymentsExampleTests/Pods-OnlinePaymentsExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		F7E8355024D97936005ACD25 /* OnlinePaymentsExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlinePaymentsExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7E8355324D97936005ACD25 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7E8355C24D9793A005ACD25 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -141,24 +137,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBBA89D21D881845A3A92E4D /* Pods_OnlinePaymentsExample.framework in Frameworks */,
+				BF7E714B2BBE86EC00AEFE22 /* SVProgressHUD in Frameworks */,
+				BF3EC1732BBD868C000C0032 /* OnlinePaymentsKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		70EC47F12464041A6241A535 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				4D96E28E555E712EBAE20A74 /* Pods-OnlinePaymentsExample.debug.xcconfig */,
-				00E2DB98C748D5C4925834C2 /* Pods-OnlinePaymentsExample.release.xcconfig */,
-				8046582515EBD0CA5A952D63 /* Pods-OnlinePaymentsExampleTests.debug.xcconfig */,
-				BD978D340EC0D5C55704FA8C /* Pods-OnlinePaymentsExampleTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		7BF5CC392A14F27E00753D6B /* Logging */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,21 +153,11 @@
 			path = Logging;
 			sourceTree = "<group>";
 		};
-		7E2A0F1FD8E25E71DAC4B109 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2B29614BEFF74027DD122C76 /* Pods_OnlinePaymentsExample.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		F7E8354724D97936005ACD25 = {
 			isa = PBXGroup;
 			children = (
 				F7E8355224D97936005ACD25 /* OnlinePaymentsExample */,
 				F7E8355124D97936005ACD25 /* Products */,
-				70EC47F12464041A6241A535 /* Pods */,
-				7E2A0F1FD8E25E71DAC4B109 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -402,17 +378,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F7E8356F24D9793A005ACD25 /* Build configuration list for PBXNativeTarget "OnlinePaymentsExample" */;
 			buildPhases = (
-				54DDD2FEB50F38A8CCDC1030 /* [CP] Check Pods Manifest.lock */,
 				F7E8354C24D97936005ACD25 /* Sources */,
 				F7E8354D24D97936005ACD25 /* Frameworks */,
 				F7E8354E24D97936005ACD25 /* Resources */,
-				5C0276B8AE9B3D848E9C310C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = OnlinePaymentsExample;
+			packageProductDependencies = (
+				BF3EC1722BBD868C000C0032 /* OnlinePaymentsKit */,
+				BF7E714A2BBE86EC00AEFE22 /* SVProgressHUD */,
+			);
 			productName = IngenicoDirectExample;
 			productReference = F7E8355024D97936005ACD25 /* OnlinePaymentsExample.app */;
 			productType = "com.apple.product-type.application";
@@ -441,6 +419,10 @@
 				Base,
 			);
 			mainGroup = F7E8354724D97936005ACD25;
+			packageReferences = (
+				BF3EC1712BBD868C000C0032 /* XCRemoteSwiftPackageReference "sdk-client-swift" */,
+				BF7E71492BBE86EC00AEFE22 /* XCRemoteSwiftPackageReference "SVProgressHUD" */,
+			);
 			productRefGroup = F7E8355124D97936005ACD25 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -462,48 +444,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		54DDD2FEB50F38A8CCDC1030 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-OnlinePaymentsExample-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5C0276B8AE9B3D848E9C310C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-OnlinePaymentsExample/Pods-OnlinePaymentsExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-OnlinePaymentsExample/Pods-OnlinePaymentsExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OnlinePaymentsExample/Pods-OnlinePaymentsExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F7E8354C24D97936005ACD25 /* Sources */ = {
@@ -698,7 +638,6 @@
 		};
 		F7E8357024D9793A005ACD25 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D96E28E555E712EBAE20A74 /* Pods-OnlinePaymentsExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -720,7 +659,6 @@
 		};
 		F7E8357124D9793A005ACD25 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 00E2DB98C748D5C4925834C2 /* Pods-OnlinePaymentsExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -762,6 +700,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BF3EC1712BBD868C000C0032 /* XCRemoteSwiftPackageReference "sdk-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/online-payments/sdk-client-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.0;
+			};
+		};
+		BF7E71492BBE86EC00AEFE22 /* XCRemoteSwiftPackageReference "SVProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVProgressHUD/SVProgressHUD.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BF3EC1722BBD868C000C0032 /* OnlinePaymentsKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF3EC1712BBD868C000C0032 /* XCRemoteSwiftPackageReference "sdk-client-swift" */;
+			productName = OnlinePaymentsKit;
+		};
+		BF7E714A2BBE86EC00AEFE22 /* SVProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF7E71492BBE86EC00AEFE22 /* XCRemoteSwiftPackageReference "SVProgressHUD" */;
+			productName = SVProgressHUD;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F7E8354824D97936005ACD25 /* Project object */;
 }

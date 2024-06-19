@@ -35,7 +35,7 @@
 
 "SuccessLabel" = "Congratulations!";
 
-"SuccessText" = "Your payment has been successfully processed by the SDK.\n\nThe method \"didSubmitPaymentRequest\" in \"GCStartViewController\" contains the encrypted data that should be sent to GlobalCollect.";
+"SuccessText" = "Your payment has been successfully processed by the SDK.\n\nThe method \"didSubmitPaymentRequest\" in \"PaymentProductsViewControllerTarget\" contains the encrypted data that should be sent to GlobalCollect.";
 
 "SetupExplanation" = "To process a payment using the services provided by GlobalCollect, the following information must be provided by a merchant.\n\nAfter providing the information requested below, this example app can process a payment.";
 
