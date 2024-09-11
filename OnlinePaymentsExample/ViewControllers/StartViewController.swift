@@ -83,16 +83,11 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         explanation.translatesAutoresizingMaskIntoConstraints = false
         explanation.text =
             NSLocalizedString(
-                "SetupExplanation",
+                "SetupExplanationText",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
-                comment:
-                    """
-                    To process a payment using the services provided by the Online Payments platform,
-                    the following information must be provided by a merchant.
-                    After providing the information requested below, this example app can process a payment.
-                    """
+                comment: ""
             )
         explanation.isEditable = false
         explanation.backgroundColor =
@@ -105,7 +100,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         clientSessionIdLabel = Label()
         clientSessionIdLabel.text =
             NSLocalizedString(
-                "ClientSessionIdentifier",
+                "ClientSessionIdentifierTitle",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
@@ -127,7 +122,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         customerIdLabel = Label()
         customerIdLabel.text =
             NSLocalizedString(
-                "CustomerIdentifier",
+                "CustomerIdentifierTitle",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
@@ -148,7 +143,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         merchantIdLabel = Label()
         merchantIdLabel.text =
             NSLocalizedString(
-                "MerchantIdentifier",
+                "MerchantIdentifierTitle",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
@@ -173,7 +168,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
-                comment: "Region"
+                comment: ""
             )
         baseURLLabel.translatesAutoresizingMaskIntoConstraints = false
         baseURLTextField = TextField()
@@ -196,7 +191,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
-                comment: "Region"
+                comment: ""
             )
         assetsBaseURLLabel.translatesAutoresizingMaskIntoConstraints = false
         assetsBaseURLTextField = TextField()
@@ -215,7 +210,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         amountLabel = Label()
         amountLabel.text =
             NSLocalizedString(
-                "AmountInCents",
+                "AmountInCentsTitle",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
@@ -235,7 +230,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         countryCodeLabel = Label()
         countryCodeLabel.text =
             NSLocalizedString(
-                "CountryCode",
+                "CountryCodeTitle",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
@@ -257,7 +252,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         currencyCodeLabel = Label()
         currencyCodeLabel.text =
             NSLocalizedString(
-                "CurrencyCode",
+                "CurrencyCodeTitle",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
@@ -279,7 +274,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         isRecurringLabel = Label()
         isRecurringLabel.text =
             NSLocalizedString(
-                "RecurringPayment",
+                "RecurringPaymentTitle",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
@@ -294,7 +289,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         payButton = Button()
         payButton.setTitle(
             NSLocalizedString(
-                "PayNow",
+                "StartPaymentProcessButtonText",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
@@ -626,9 +621,9 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         SVProgressHUD.setDefaultMaskType(.clear)
         let status =
             NSLocalizedString(
-                "gc.app.general.loading.body",
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
+                "LoadingMessage",
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
                 value: "",
                 comment: ""
             )

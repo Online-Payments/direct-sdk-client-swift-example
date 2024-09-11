@@ -8,7 +8,6 @@ import UIKit
 import OnlinePaymentsKit
 
 class AppConstants {
-    static let sdkBundle = Bundle(path: SDKConstants.kSDKBundlePath!)!
     static var appBundle = Bundle.main
     static let kAppLocalizable = "AppLocalizable"
     static var kPrimaryColor = UIColor(red: 0, green: 0.8, blue: 0, alpha: 1)
@@ -16,7 +15,7 @@ class AppConstants {
     static let kClientSessionId = "kClientSessionId"
     static let kCustomerId = "kCustomerId"
     static let kMerchantId = "kMerchantId"
-    static let kApplicationIdentifier = "Swift Example Application/v2.2.0"
+    static let kApplicationIdentifier = "Swift Example Application/v2.2.1"
     static let kBaseURL = "kBaseURL"
     static let kAssetsBaseURL = "kAssetsBaseURL"
     static let kPrice = "kPrice"

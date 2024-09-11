@@ -60,7 +60,7 @@ class FormRowsConverter {
 
     static func errorMessage(for error: ValidationError, withCurrency: Bool) -> String {
         let errorClass = error.self
-        let errorMessageFormat = "gc.general.paymentProductFields.validationErrors.%@.label"
+        let errorMessageFormat = "ValidationErrors.%@"
         var errorMessageKey: String
         var errorMessageValue: String
         var errorMessage: String
@@ -79,8 +79,8 @@ class FormRowsConverter {
             let errorMessageValueWithPlaceholders =
                 NSLocalizedString(
                     errorMessageKey,
-                    tableName: SDKConstants.kSDKLocalizable,
-                    bundle: AppConstants.sdkBundle,
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
                     value: "",
                     comment: ""
                 )
@@ -99,8 +99,8 @@ class FormRowsConverter {
             let errorMessageValueWithPlaceholders =
                 NSLocalizedString(
                     errorMessageKey,
-                    tableName: SDKConstants.kSDKLocalizable,
-                    bundle: AppConstants.sdkBundle,
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
                     value: "",
                     comment: ""
                 )
@@ -122,8 +122,8 @@ class FormRowsConverter {
             errorMessageValue =
                 NSLocalizedString(
                     errorMessageKey,
-                    tableName: SDKConstants.kSDKLocalizable,
-                    bundle: AppConstants.sdkBundle,
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
                     value: "",
                     comment: ""
                 )
@@ -244,24 +244,18 @@ class FormRowsConverter {
 
         let descriptionKey =
             String(
-                format: "gc.general.paymentProducts.%@.paymentProductFields.%@.label",
-                paymentItem.identifier,
+                format: "PaymentProductFields.%@.label",
                 field.identifier
             )
         let descriptionValue =
             NSLocalizedString(
                 descriptionKey,
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
                 value: "",
-                comment: "Accept {link}"
+                comment: ""
             )
-        let labelKey =
-            String(
-                format: "gc.general.paymentProducts.%@.paymentProductFields.%@.link.label",
-                paymentItem.identifier,
-                field.identifier
-            )
+        
         let attrString = NSMutableAttributedString(string: descriptionValue)
 
         let row =

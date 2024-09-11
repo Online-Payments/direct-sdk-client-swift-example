@@ -43,9 +43,9 @@ class PaymentProductsViewController: UITableViewController {
                 )
             accountsSection.title =
                 NSLocalizedString(
-                    "gc.app.paymentProductSelection.accountsOnFileTitle",
-                    tableName: SDKConstants.kSDKLocalizable,
-                    bundle: AppConstants.sdkBundle,
+                    "AccountsOnFileTitle",
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
                     value: "",
                     comment: "Title of the section that displays stored payment products."
                 )
@@ -54,9 +54,9 @@ class PaymentProductsViewController: UITableViewController {
         let productsSection = TableSectionConverter.paymentProductsTableSection(from: paymentItems)
         productsSection.title =
             NSLocalizedString(
-                "gc.app.paymentProductSelection.pageTitle",
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
+                "SelectPaymentProductText",
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
                 value: "",
                 comment: "Title of the section that shows all available payment products."
             )
@@ -73,11 +73,11 @@ class PaymentProductsViewController: UITableViewController {
         header = SummaryTableHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 70))
         let totalLabel =
             NSLocalizedString(
-                "gc.app.general.shoppingCart.total",
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
+                "TotalText",
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
                 value: "",
-                comment: "Description of the amount header."
+                comment: "Total of the shopping cart title"
             )
         header.setSummary(summary: "\(totalLabel):")
 
@@ -94,9 +94,9 @@ class PaymentProductsViewController: UITableViewController {
         header.setSecurePayment(
             securePayment:
                 NSLocalizedString(
-                    "gc.app.general.securePaymentText",
-                    tableName: SDKConstants.kSDKLocalizable,
-                    bundle: AppConstants.sdkBundle,
+                    "SecurePaymentText",
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
                     value: "",
                     comment: "Text indicating that a secure payment method is used."
                 )

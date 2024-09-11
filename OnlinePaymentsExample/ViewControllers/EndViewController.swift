@@ -80,7 +80,7 @@ class EndViewController: UIViewController {
         label.textAlignment = .center
         label.text =
             NSLocalizedString(
-                "SuccessLabel",
+                "SuccessTitle",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",
@@ -109,7 +109,7 @@ class EndViewController: UIViewController {
         container.addSubview(button)
         let continueButtonTitle =
             NSLocalizedString(
-                "ContinueButtonTitle",
+                "ContinueButtonText",
                 tableName: AppConstants.kAppLocalizable,
                 bundle: AppConstants.appBundle,
                 value: "",

@@ -33,12 +33,11 @@ class COBrandsExplanationTableViewCell: TableViewCell {
         let font = UIFont.systemFont(ofSize: 12)
         let fontAttribute = [NSAttributedString.Key.font: font]
 
-        let cellKey = "gc.general.cobrands.introText"
         let cellString =
             NSLocalizedString(
-                cellKey,
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
+                "CobrandsIntroText",
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
                 value: "",
                 comment: ""
             )

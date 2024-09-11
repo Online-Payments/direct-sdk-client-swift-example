@@ -126,15 +126,7 @@ class DetailedPickerViewTableViewCell: PickerViewTableViewCell, UIPickerViewDele
         let returnValue = NSMutableAttributedString()
         let left: NSAttributedString
         let right: NSAttributedString?
-        let key = "gc.general.paymentProductFields.\(fieldIdentifier ?? "").fields.\(element.id).label"
-        let elementId =
-            NSLocalizedString(
-                key,
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
-                value: element.id,
-                comment: ""
-            )
+        let elementId = element.id
 
         switch element.type {
         case .currency:

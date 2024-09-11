@@ -266,6 +266,7 @@ class CardProductViewController: PaymentProductViewController {
 
     private func switchToPaymentProduct(response: IINDetailsResponse) {
         self.cobrands = response.coBrands
+        
         if response.status == .supported {
             var coBrandSelected = false
             let coBrands = response.coBrands
@@ -302,33 +303,21 @@ class CardProductViewController: PaymentProductViewController {
         return currentEnteredCreditCardNumber.prefix(8) != previousEnteredCreditCardNumber.prefix(8)
     }
 
-    func coBrandForms(inputCoBrands: [IINDetail]) -> [FormRow] {
-        var coBrands = [String]()
-        for coBrand: IINDetail in inputCoBrands where coBrand.allowedInContext {
-            coBrands.append(coBrand.paymentProductId)
-        }
+    func coBrandForms(coBrandProducts: [PaymentProduct]) -> [FormRow] {
+        
         var formRows = [FormRow]()
 
-        if coBrands.count > 1 {
+        if coBrandProducts.count > 1 {
             // Add explanation row
             let explanationRow = FormRowCoBrandsExplanation()
             formRows.append(explanationRow)
 
             // Add row for selection coBrands
-            for id in coBrands {
+            for product in coBrandProducts {
                 let row = PaymentProductsTableRow()
-                row.paymentProductIdentifier = id
+                row.paymentProductIdentifier = product.identifier
 
-                let paymentProductKey = "gc.general.paymentProducts.\(id).name"
-                let paymentProductValue =
-                    NSLocalizedString(
-                        paymentProductKey,
-                        tableName: SDKConstants.kSDKLocalizable,
-                        bundle: AppConstants.sdkBundle,
-                        value: "",
-                        comment: ""
-                    )
-                row.name = paymentProductValue
+                row.name = product.displayHintsList.first?.label
                 row.logo = self.paymentItem.displayHintsList.first?.logoImage
 
                 formRows.append(row)
@@ -343,7 +332,29 @@ class CardProductViewController: PaymentProductViewController {
 
     override func initializeFormRows() {
         super.initializeFormRows()
-        let newFormRows = coBrandForms(inputCoBrands: self.cobrands)
-        self.formRows.insert(contentsOf: newFormRows, at: 2)
+        var coBrandProducts = [PaymentProduct]()
+        var count = self.cobrands.filter({$0.allowedInContext}).count
+        for coBrand in self.cobrands where coBrand.allowedInContext {
+            session.paymentProduct(
+                withId: coBrand.paymentProductId,
+                context: context,
+                success: {(_ paymentProduct: PaymentProduct) -> Void in
+                    coBrandProducts.append(paymentProduct)
+                    count = count - 1
+                    if (count < 1) {
+                        let newFormRows = self.coBrandForms(coBrandProducts: coBrandProducts)
+                        self.formRows.insert(contentsOf: newFormRows, at: 2)
+                    }
+                },
+                failure: { _ in
+                    count = count - 1
+                },
+                apiFailure: { _ in
+                    count = count - 1
+                }
+            )
+
+        }
+        
     }
 }

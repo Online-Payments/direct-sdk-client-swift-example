@@ -110,11 +110,11 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
             summary:
                 """
                 \(NSLocalizedString(
-                    "gc.app.general.shoppingCart.total",
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
+                    "TotalText",
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
                 value: "",
-                comment: "Description of the amount header."
+                comment: "Total of the shopping cart title"
                 )):
                 """
         )
@@ -132,9 +132,9 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
         header.setSecurePayment(
             securePayment:
                 NSLocalizedString(
-                    "gc.app.general.securePaymentText",
-                    tableName: SDKConstants.kSDKLocalizable,
-                    bundle: AppConstants.sdkBundle,
+                    "SecurePaymentText",
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
                     value: "",
                     comment: "Text indicating that a secure payment method is used."
                 )
@@ -148,9 +148,9 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
                 FormRowSwitch(
                     title:
                         NSLocalizedString(
-                            "gc.app.paymentProductDetails.rememberMe",
-                            tableName: SDKConstants.kSDKLocalizable,
-                            bundle: AppConstants.sdkBundle,
+                            "RememberMeText",
+                            tableName: AppConstants.kAppLocalizable,
+                            bundle: AppConstants.appBundle,
                             value: "",
                             comment: "Explanation of the switch for remembering payment information."
                         ),
@@ -165,9 +165,9 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
             let switchFormRowTooltip = FormRowTooltip()
             switchFormRowTooltip.text =
                 NSLocalizedString(
-                    "gc.app.paymentProductDetails.rememberMe.tooltip",
-                    tableName: SDKConstants.kSDKLocalizable,
-                    bundle: AppConstants.sdkBundle,
+                    "RememberMeTooltip",
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
                     value: "",
                     comment: ""
                 )
@@ -178,9 +178,9 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
         // Add pay and cancel button
         let payButtonTitle =
             NSLocalizedString(
-                "gc.app.paymentProductDetails.payButton",
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
+                "PayButtonText",
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
                 value: "",
                 comment: "Title of the pay button on the payment product screen."
             )
@@ -190,9 +190,9 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
 
         let cancelButtonTitle =
             NSLocalizedString(
-                "gc.app.paymentProductDetails.cancelButton",
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
+                "CancelButtonText",
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
                 value: "",
                 comment: "Title of the cancel button on the payment product screen."
             )

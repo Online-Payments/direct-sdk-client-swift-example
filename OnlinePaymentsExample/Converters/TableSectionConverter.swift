@@ -64,8 +64,8 @@ class TableSectionConverter {
             let paymentProductValue =
                 NSLocalizedString(
                     paymentProductKey,
-                    tableName: SDKConstants.kSDKLocalizable,
-                    bundle: AppConstants.sdkBundle,
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
                     value: "",
                     comment: ""
                 )

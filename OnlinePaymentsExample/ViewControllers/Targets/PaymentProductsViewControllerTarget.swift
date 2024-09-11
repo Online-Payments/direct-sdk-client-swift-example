@@ -47,9 +47,9 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
         SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.clear)
         let status =
             NSLocalizedString(
-                "gc.app.general.loading.body",
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
+                "LoadingMessage",
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
                 value: "",
                 comment: ""
             )
@@ -159,9 +159,9 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
             SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.clear)
             let status =
                 NSLocalizedString(
-                    "gc.app.general.loading.body",
-                    tableName: SDKConstants.kSDKLocalizable,
-                    bundle: AppConstants.sdkBundle,
+                    "LoadingMessage",
+                    tableName: AppConstants.kAppLocalizable,
+                    bundle: AppConstants.appBundle,
                     value: "",
                     comment: ""
                 )
@@ -299,11 +299,11 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
             PKPaymentSummaryItem(
                 label:
                     NSLocalizedString(
-                        "gc.app.general.shoppingCart.subtotal",
-                        tableName: SDKConstants.kSDKLocalizable,
-                        bundle: AppConstants.sdkBundle,
+                        "SubtotalText",
+                        tableName: AppConstants.kAppLocalizable,
+                        bundle: AppConstants.appBundle,
                         value: "",
-                        comment: "subtotal summary item title"
+                        comment: "Subtotal summary items title"
                     ),
                 amount: NSDecimalNumber(mantissa: UInt64(subtotal), exponent: -2, isNegative: false)
             )
@@ -329,9 +329,9 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
         SVProgressHUD.setDefaultMaskType(.clear)
         let status =
             NSLocalizedString(
-                "gc.app.general.loading.body",
-                tableName: SDKConstants.kSDKLocalizable,
-                bundle: AppConstants.sdkBundle,
+                "LoadingMessage",
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
                 value: "",
                 comment: ""
             )
