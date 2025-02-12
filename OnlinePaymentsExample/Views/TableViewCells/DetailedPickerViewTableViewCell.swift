@@ -28,12 +28,6 @@ class DetailedPickerViewTableViewCell: PickerViewTableViewCell, UIPickerViewDele
         }
     }
 
-    override var items: [ValueMappingItem]? {
-        didSet {
-            pickerView.content = items?.map { $0.displayName! } ?? []
-        }
-    }
-
     override var selectedRow: Int? {
         get {
             return pickerView.selectedRow(inComponent: 0)
@@ -88,9 +82,6 @@ class DetailedPickerViewTableViewCell: PickerViewTableViewCell, UIPickerViewDele
     }
 
     func label(row: Int) -> NSAttributedString {
-        if (self.items?[row].displayElements.count ?? 0) < 2 {
-            return NSAttributedString()
-        }
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.tabStops =
             [
@@ -101,59 +92,12 @@ class DetailedPickerViewTableViewCell: PickerViewTableViewCell, UIPickerViewDele
                 )
             ]
 
-        let attributedString = self.items?[self.selectedRow ?? 0].displayElements
-            .map({(element) in self.attributedStringFromDisplayElement(element: element)})
-            .reduce(NSMutableAttributedString()) {(old, new) in
-                if old.length > 0 {
-                    old.append(NSAttributedString(string: "\n"))
-                }
-                old.append(new)
-                return old}
-        attributedString?.addAttribute(
-            NSAttributedString.Key.paragraphStyle,
-            value: paragraphStyle,
-            range: NSRange(location: 0, length: (attributedString?.length)!)
-        )
-        return attributedString ?? NSAttributedString()
+        return NSAttributedString()
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.updateLabel(row: row)
         delegate?.pickerView!(_: pickerView, didSelectRow: row, inComponent: component)
-    }
-
-    func attributedStringFromDisplayElement(element: DisplayElement) -> NSAttributedString {
-        let returnValue = NSMutableAttributedString()
-        let left: NSAttributedString
-        let right: NSAttributedString?
-        let elementId = element.id
-
-        switch element.type {
-        case .currency:
-            left = NSAttributedString(string: elementId)
-            right =
-                NSAttributedString(string: currencyFormatter.string(from: NSNumber(value: Double(element.value)!/100))!)
-        case .percentage:
-            left = NSAttributedString(string: elementId)
-            right =
-                NSAttributedString(string: percentFormatter.string(from: NSNumber(value: Double(element.value)!/100))!)
-        case .string:
-            left = NSAttributedString(string: elementId)
-            right = NSAttributedString(string: element.value)
-        case .uri:
-            left = NSAttributedString(string: elementId, attributes: [NSAttributedString.Key.link: element.value])
-            right = nil
-        case .integer:
-            left = NSAttributedString(string: elementId)
-            right = NSAttributedString(string: element.value)
-        }
-        returnValue.append(left)
-        if let right = right {
-            returnValue.append(NSAttributedString(string: "\t"))
-            returnValue.append(right)
-
-        }
-        return returnValue
     }
 
     override func layoutSubviews() {
@@ -186,6 +130,5 @@ class DetailedPickerViewTableViewCell: PickerViewTableViewCell, UIPickerViewDele
     override func prepareForReuse() {
         dataSource = nil
         selectedRow = nil
-        items = []
     }
 }

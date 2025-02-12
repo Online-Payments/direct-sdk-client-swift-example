@@ -6,10 +6,11 @@
 
 // App elements
 "StartPaymentProcessButtonText" = "Start payment process";
+"PasteButtonText" = "Paste session details";
 "ContinueButtonText" = "Start another payment process";
 "SuccessTitle" = "Success!";
-"SuccessText" = "Your payment has been successfully processed by the SDK.\n\nThe method \"didSubmitPaymentRequest\" in \"PaymentProductsViewControllerTarget\" contains the encrypted data that should be sent to the Create Payment API.";
-"SetupExplanationText" = "To process a payment using the services provided by Online Payments, the following information must be provided by a merchant.\n\nAfter providing the information requested below, this example app can process a payment.";
+"SuccessText" = "Your payment has been successfully processed by the SDK.\n\nThe method \"didSubmitPaymentRequest\" in \"PaymentProductsViewControllerTarget\" contains the encrypted data that should be sent to the Create Payment API. You can see that encrypted string below.";
+"SetupExplanationText" = "To process a payment using the services provided by Online Payments, the following information must be provided by a merchant. This information can be obtained using the Server SDK or by using the Direct API Explorer. If you copy the exact response from these services, you can use the Paste button below to automatically fill in the information. \n\nAfter providing the requested information, this example app can process a payment.";
 "ClientSessionIdentifierTitle" = "Client session identifier";
 "CustomerIdentifierTitle" = "Customer identifier";
 "MerchantIdentifierTitle" = "Merchant identifier";

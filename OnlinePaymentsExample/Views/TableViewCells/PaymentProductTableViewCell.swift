@@ -111,5 +111,4 @@ class PaymentProductTableViewCell: TableViewCell {
         name = nil
         logo = nil
     }
-
 }

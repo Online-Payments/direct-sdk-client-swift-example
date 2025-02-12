@@ -10,12 +10,13 @@ import OnlinePaymentsKit
 class AppConstants {
     static var appBundle = Bundle.main
     static let kAppLocalizable = "AppLocalizable"
-    static var kPrimaryColor = UIColor(red: 0, green: 0.8, blue: 0, alpha: 1)
-    static var kDestructiveColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+    static var kPrimaryColor = UIColor.systemGreen
+    static var kSecondaryColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+    static var kDestructiveColor = UIColor.systemRed
     static let kClientSessionId = "kClientSessionId"
     static let kCustomerId = "kCustomerId"
     static let kMerchantId = "kMerchantId"
-    static let kApplicationIdentifier = "Swift Example Application/v2.2.1"
+    static let kApplicationIdentifier = "Swift Example Application/v2.3.0"
     static let kBaseURL = "kBaseURL"
     static let kAssetsBaseURL = "kAssetsBaseURL"
     static let kPrice = "kPrice"

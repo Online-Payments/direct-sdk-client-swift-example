@@ -60,7 +60,9 @@ class CardProductViewController: PaymentProductViewController {
 
         if (row is FormRowCoBrandsExplanation || row is PaymentProductsTableRow) && !row.isEnabled {
             return 0
-        } else if row is FormRowCoBrandsExplanation {
+        }
+
+        if row is FormRowCoBrandsExplanation {
             let cellString = COBrandsExplanationTableViewCell.cellString()
             let rect =
                 cellString.boundingRect(
@@ -69,7 +71,9 @@ class CardProductViewController: PaymentProductViewController {
                     context: nil
                 )
             return rect.size.height + 20
-        } else if row is FormRowCoBrandsSelection {
+        }
+
+        if row is FormRowCoBrandsSelection {
             return 30
         }
 
@@ -79,9 +83,13 @@ class CardProductViewController: PaymentProductViewController {
     override func formRowCell(for row: FormRow, indexPath: IndexPath) -> UITableViewCell {
         if let formRow = row as? FormRowCoBrandsSelection {
             return self.cell(for: formRow, tableView: tableView)
-        } else if let formRow = row as? FormRowCoBrandsExplanation {
+        }
+
+        if let formRow = row as? FormRowCoBrandsExplanation {
             return self.cell(for: formRow, tableView: tableView)
-        } else if let formRow = row as? PaymentProductsTableRow {
+        }
+
+        if let formRow = row as? PaymentProductsTableRow {
             return self.cell(forPaymentProduct: formRow, tableView: tableView)
         }
 
@@ -92,9 +100,11 @@ class CardProductViewController: PaymentProductViewController {
         guard let cell =
             tableView.dequeueReusableCell(
                 withIdentifier: CoBrandsSelectionTableViewCell.reuseIdentifier
-            ) as? CoBrandsSelectionTableViewCell else {
-              fatalError("Could not cast cell to CoBrandsSelectionTableViewCell")
+            ) as? CoBrandsSelectionTableViewCell
+        else {
+            fatalError("Could not cast cell to CoBrandsSelectionTableViewCell")
         }
+
         return cell
     }
 
@@ -102,9 +112,11 @@ class CardProductViewController: PaymentProductViewController {
         guard let cell =
             tableView.dequeueReusableCell(
                 withIdentifier: COBrandsExplanationTableViewCell.reuseIdentifier
-            ) as? COBrandsExplanationTableViewCell else {
-              fatalError("Could not cast cell to COBrandsExplanationTableViewCell")
+            ) as? COBrandsExplanationTableViewCell
+        else {
+            fatalError("Could not cast cell to COBrandsExplanationTableViewCell")
         }
+
         return cell
     }
 
@@ -112,8 +124,9 @@ class CardProductViewController: PaymentProductViewController {
         guard let cell =
             tableView.dequeueReusableCell(
                 withIdentifier: PaymentProductTableViewCell.reuseIdentifier
-            ) as? PaymentProductTableViewCell else {
-              fatalError("Could not cast cell to PaymentProductTableViewCell")
+            ) as? PaymentProductTableViewCell
+        else {
+            fatalError("Could not cast cell to PaymentProductTableViewCell")
         }
 
         cell.name = row.name
@@ -146,6 +159,7 @@ class CardProductViewController: PaymentProductViewController {
             updateFormRows()
         }
     }
+
     override func updateFormRows() {
         if self.switching {
 
@@ -317,8 +331,8 @@ class CardProductViewController: PaymentProductViewController {
                 let row = PaymentProductsTableRow()
                 row.paymentProductIdentifier = product.identifier
 
-                row.name = product.displayHintsList.first?.label
-                row.logo = self.paymentItem.displayHintsList.first?.logoImage
+                row.name = product.displayHints.first?.label
+                row.logo = self.paymentItem.displayHints.first?.logoImage
 
                 formRows.append(row)
             }

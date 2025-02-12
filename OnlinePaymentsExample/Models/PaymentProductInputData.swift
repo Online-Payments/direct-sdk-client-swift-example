@@ -27,9 +27,7 @@ class PaymentProductInputData {
         let keys = Array(fieldValues.keys)
 
         for key: String in keys {
-            if let value = fieldValues[key] {
-                paymentRequest.setValue(forField: key, value: value)
-            }
+            paymentRequest.setValue(forField: key, value: self.unmaskedValue(forField: key))
         }
     }
 

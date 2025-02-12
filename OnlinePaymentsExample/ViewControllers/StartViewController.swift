@@ -49,6 +49,8 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
     var isRecurringLabel: Label!
     var isRecurringSwitch: Switch!
     var payButton: UIButton!
+    var pasteButton: UIButton!
+    var pasteErrorLabel: UILabel!
 
     var paymentProductsViewControllerTarget: PaymentProductsViewControllerTarget?
 
@@ -207,6 +209,31 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         containerView.addSubview(assetsBaseURLLabel)
         containerView.addSubview(assetsBaseURLTextField)
 
+        pasteButton = Button(type: .secondary)
+        pasteButton.setTitle(
+            NSLocalizedString(
+                "PasteButtonText",
+                tableName: AppConstants.kAppLocalizable,
+                bundle: AppConstants.appBundle,
+                value: "",
+                comment: "Paste from clipboard"
+            ),
+            for: .normal
+        )
+
+        pasteButton.translatesAutoresizingMaskIntoConstraints = false
+        //pasteButton.backgroundColor = .systemBlue
+        pasteButton.addTarget(self, action: #selector(StartViewController.pasteButtonTapped), for: .touchUpInside)
+        containerView.addSubview(pasteButton)
+
+        pasteErrorLabel = UILabel()
+        pasteErrorLabel.translatesAutoresizingMaskIntoConstraints = false
+        pasteErrorLabel.textColor = .red
+        pasteErrorLabel.numberOfLines = 0
+        pasteErrorLabel.isHidden = true
+
+        containerView.addSubview(pasteErrorLabel)
+
         amountLabel = Label()
         amountLabel.text =
             NSLocalizedString(
@@ -313,6 +340,8 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
             "baseURLTextField": baseURLTextField,
             "assetsBaseURLLabel": assetsBaseURLLabel,
             "assetsBaseURLTextField": assetsBaseURLTextField,
+            "pasteButton": pasteButton,
+            "pasteErrorLabel": pasteErrorLabel,
             "amountLabel": amountLabel,
             "amountTextField": amountTextField,
             "countryCodeLabel": countryCodeLabel,
@@ -434,6 +463,22 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         )
         containerView.addConstraints(
             NSLayoutConstraint.constraints(
+                withVisualFormat: "[pasteButton]-|",
+                options: [],
+                metrics: nil,
+                views: views
+            )
+        )
+        containerView.addConstraints(
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "|-[pasteErrorLabel]-|",
+                options: [],
+                metrics: nil,
+                views: views
+            )
+        )
+        containerView.addConstraints(
+            NSLayoutConstraint.constraints(
                 withVisualFormat: "|-[amountLabel]-|",
                 options: [],
                 metrics: nil,
@@ -495,7 +540,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
             NSLayoutConstraint.constraints(
                 withVisualFormat:
                     // swiftlint:disable line_length
-                    "V:|-(fieldSeparator)-[explanation]-(fieldSeparator)-[clientSessionIdLabel]-[clientSessionIdTextField]-(fieldSeparator)-[customerIdLabel]-[customerIdTextField]-(fieldSeparator)-[baseURLLabel]-[baseURLTextField]-(fieldSeparator)-[assetsBaseURLLabel]-[assetsBaseURLTextField]-(fieldSeparator)-[merchantIdLabel]-[merchantIdTextField]-(groupSeparator)-[amountLabel]-[amountTextField]-(fieldSeparator)-[countryCodeLabel]-[countryCodeTextField]-(fieldSeparator)-[currencyCodeLabel]-[currencyCodeTextField]-(fieldSeparator)-[isRecurringSwitch]-(fieldSeparator)-[payButton]-|",
+                    "V:|-(fieldSeparator)-[explanation]-(fieldSeparator)-[clientSessionIdLabel]-[clientSessionIdTextField]-(fieldSeparator)-[customerIdLabel]-[customerIdTextField]-(fieldSeparator)-[baseURLLabel]-[baseURLTextField]-(fieldSeparator)-[assetsBaseURLLabel]-[assetsBaseURLTextField]-(fieldSeparator)-[merchantIdLabel]-[merchantIdTextField]-(fieldSeparator)-[pasteButton]-[pasteErrorLabel]-(groupSeparator)-[amountLabel]-[amountTextField]-(fieldSeparator)-[countryCodeLabel]-[countryCodeTextField]-(fieldSeparator)-[currencyCodeLabel]-[currencyCodeTextField]-(fieldSeparator)-[isRecurringSwitch]-(fieldSeparator)-[payButton]-|",
                     // swiftlint:enable line_length
                 options: [],
                 metrics: metrics,
@@ -568,7 +613,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         )
         superContainerView.addConstraint(
             NSLayoutConstraint(
-                item: self.containerView,
+                item: self.containerView!,
                 attribute: .width,
                 relatedBy: .equal,
                 toItem: nil,
@@ -579,7 +624,7 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         )
         self.view.addConstraint(
             NSLayoutConstraint(
-                item: self.containerView,
+                item: self.containerView!,
                 attribute: .centerX,
                 relatedBy: .equal,
                 toItem: self.view,
@@ -607,6 +652,48 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
 
     // MARK: - Button actions
 
+    @objc func pasteButtonTapped(_ sender: UIButton) {
+        pasteErrorLabel.isHidden = true
+        pasteErrorLabel.text = ""
+
+        guard let pasteboardString = UIPasteboard.general.string
+        else {
+            showPasteError("No string found on pasteboard.")
+            return
+        }
+
+        guard let data = pasteboardString.data(using: .utf8)
+        else {
+            showPasteError("Could not convert clipboard string to UTF-8 data.")
+            return
+        }
+
+        do {
+            if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                if let clientSessionId = jsonObject["clientSessionId"] as? String {
+                    clientSessionIdTextField.text = clientSessionId
+                }
+
+                if let baseURL = jsonObject["clientApiUrl"] as? String {
+                    baseURLTextField.text = baseURL
+                }
+
+                if let assetsBaseURL = jsonObject["assetUrl"] as? String {
+                    assetsBaseURLTextField.text = assetsBaseURL
+                }
+
+                if let customerId = jsonObject["customerId"] as? String {
+                    customerIdTextField.text = customerId
+                }
+            } else {
+                showPasteError("JSON was not in the expected [String: Any] format.")
+            }
+        } catch {
+            showPasteError("Clipboard does not contain a valid JSON string.")
+        }
+    }
+
+
     @objc func buyButtonTapped(_ sender: UIButton) {
         if payButton == sender, let newValue = Int(amountTextField.text!) {
             amountValue = newValue
@@ -630,7 +717,8 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         SVProgressHUD.show(withStatus: status)
 
         guard let clientSessionId = clientSessionIdTextField.text,
-              let customerId = customerIdTextField.text else {
+              let customerId = customerIdTextField.text
+        else {
             let alert =
                 UIAlertController(
                     title:
@@ -706,7 +794,8 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         #endif
 
         guard let countryCode = countryCodeTextField.text,
-              let currencyCode = currencyCodeTextField.text else {
+              let currencyCode = currencyCodeTextField.text
+        else {
             let alert =
                 UIAlertController(
                     title:
@@ -751,7 +840,8 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
         let amountOfMoney = AmountOfMoney(totalAmount: amountValue, currencyCode: currencyCode)
         context = PaymentContext(amountOfMoney: amountOfMoney, isRecurring: isRecurring, countryCode: countryCode)
 
-        guard let context = context else {
+        guard let context = context
+        else {
             Macros.DLog(message: "Could not find context")
             let alert =
                 UIAlertController(
@@ -776,12 +866,12 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             SVProgressHUD.dismiss()
+
             return
         }
 
         session?.paymentItems(
             for: context,
-            groupPaymentProducts: false,
             success: {(_ paymentItems: PaymentItems) -> Void in
                 SVProgressHUD.dismiss()
                 self.showPaymentProductSelection(paymentItems)
@@ -847,12 +937,16 @@ class StartViewController: UIViewController, ContinueShoppingTarget, PaymentFini
 
     // MARK: - Payment finished target
 
-    func didFinishPayment() {
-        let end = EndViewController()
+    func didFinishPayment(_ encryptedCustomerInput: String) {
+        let end = EndViewController(encryptedCustomerInput: encryptedCustomerInput)
         end.target = self
         navigationController!.pushViewController(end, animated: true)
     }
 
+    private func showPasteError(_ message: String) {
+        pasteErrorLabel.text = message
+        pasteErrorLabel.isHidden = false
+    }
 }
 
 extension StartViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -863,9 +957,11 @@ extension StartViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        guard let picker = pickerView as? PickerView else {
+        guard let picker = pickerView as? PickerView
+        else {
             fatalError("Could not cast picker to PickerView")
         }
+
         return picker.content.count
     }
 
@@ -874,11 +970,12 @@ extension StartViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         attributedTitleForRow row: Int,
         forComponent component: Int
     ) -> NSAttributedString? {
-        guard let picker = pickerView as? PickerView else {
+        guard let picker = pickerView as? PickerView
+        else {
             fatalError("Could not cast picker to PickerView")
         }
+
         let item = picker.content[row]
-        let string = NSAttributedString(string: item)
-        return string
+        return NSAttributedString(string: item)
     }
 }

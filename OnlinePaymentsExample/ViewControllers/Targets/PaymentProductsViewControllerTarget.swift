@@ -258,8 +258,8 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
         paymentRequest.merchantIdentifier = merchantId
 
         // These shipping and billing address fields are optional and can be chosen by the merchant
-        paymentRequest.requiredShippingAddressFields = .all
-        paymentRequest.requiredBillingAddressFields = .all
+        //paymentRequest.requiredShippingAddressFields = .all
+        //paymentRequest.requiredBillingAddressFields = .all
         authorizationViewController = PKPaymentAuthorizationViewController(paymentRequest: paymentRequest)
         authorizationViewController?.delegate = self
 
@@ -348,7 +348,7 @@ class PaymentProductsViewControllerTarget: NSObject, PKPaymentAuthorizationViewC
                 // be provided via the S2S Create Payment API, using field `encryptedCustomerInput`.
                 //
                 // ***************************************************************************
-                self.paymentFinishedTarget?.didFinishPayment()
+                self.paymentFinishedTarget?.didFinishPayment(preparedPaymentRequest.encryptedFields)
                 success?()
             }, failure: { _ in
                 self.showSubmitErrorDialog()

@@ -11,7 +11,18 @@ import UIKit
 
 class EndViewController: UIViewController {
 
+    var encryptedCustomerInput: String!
     var target: ContinueShoppingTarget!
+
+    init(encryptedCustomerInput: String) {
+        self.encryptedCustomerInput = encryptedCustomerInput
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        self.encryptedCustomerInput = ""
+        super.init(coder: aDecoder)
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -38,7 +49,7 @@ class EndViewController: UIViewController {
                 toItem: nil,
                 attribute: .notAnAttribute,
                 multiplier: 1,
-                constant: 250
+                constant: 500
             )
         container.addConstraint(constraint)
         constraint =
@@ -49,7 +60,7 @@ class EndViewController: UIViewController {
                 toItem: nil,
                 attribute: .notAnAttribute,
                 multiplier: 1,
-                constant: 280
+                constant: 380
             )
         container.addConstraint(constraint)
         constraint =
@@ -104,6 +115,16 @@ class EndViewController: UIViewController {
         textView.textColor = UIColor(red: 0, green: 0.58, blue: 0.82, alpha: 1)
         textView.layer.cornerRadius = 5.0
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
+
+        let encryptedString = UITextView()
+        encryptedString.translatesAutoresizingMaskIntoConstraints = false
+        encryptedString.text = self.encryptedCustomerInput
+        encryptedString.isEditable = false
+        encryptedString.backgroundColor = .lightGray
+        encryptedString.textColor = .darkText
+        encryptedString.layer.cornerRadius = 5.0
+        container.addSubview(encryptedString)
 
         let button = Button()
         container.addSubview(button)
@@ -119,7 +140,12 @@ class EndViewController: UIViewController {
         button.addTarget(self, action: #selector(EndViewController.continueButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
 
-        let viewMapping = ["label": label, "textView": textView, "button": button] as [String: Any]
+        let viewMapping: [String: Any] = [
+            "label": label,
+            "textView": textView,
+            "encryptedTextView": encryptedString,
+            "button": button
+        ]
 
         var constraints =
             NSLayoutConstraint.constraints(
@@ -139,6 +165,14 @@ class EndViewController: UIViewController {
         container.addConstraints(constraints)
         constraints =
             NSLayoutConstraint.constraints(
+                withVisualFormat: "|-[encryptedTextView]-|",
+                options: [],
+                metrics: nil,
+                views: viewMapping
+            )
+        container.addConstraints(constraints)
+        constraints =
+            NSLayoutConstraint.constraints(
                 withVisualFormat: "|-[button]-|",
                 options: [],
                 metrics: nil,
@@ -147,7 +181,7 @@ class EndViewController: UIViewController {
         container.addConstraints(constraints)
         constraints =
             NSLayoutConstraint.constraints(
-                withVisualFormat: "V:|-[label]-(20)-[textView(115)]-(20)-[button]",
+                withVisualFormat: "V:|-[label]-(20)-[textView(110)]-(10)-[encryptedTextView(280)]-(20)-[button]",
                 options: [],
                 metrics: nil,
                 views: viewMapping

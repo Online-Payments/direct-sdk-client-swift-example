@@ -17,6 +17,15 @@ class Button: UIButton {
     init(type: ExampleButtonType = .primary) {
         self.exampleButtonType = type
         super.init(frame: .zero)
+
+        self.configuration = UIButton.Configuration.plain()
+        self.configuration?.contentInsets = NSDirectionalEdgeInsets(
+            top: 8,
+            leading: 12,
+            bottom: 8,
+            trailing: 12
+        )
+
         layer.cornerRadius = 5
         self.setButtonType()
     }
@@ -47,17 +56,27 @@ class Button: UIButton {
             setTitleColor(UIColor.white, for: .normal)
             setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .highlighted)
             backgroundColor = AppConstants.kPrimaryColor
-            titleLabel?.font = UIFont.boldSystemFont(ofSize: UIFont.buttonFontSize)
+            setFont(.bold)
+
         case .secondary:
-            setTitleColor(UIColor.gray, for: .normal)
-            setTitleColor(UIColor.gray.withAlphaComponent(0.5), for: .highlighted)
-            backgroundColor = UIColor.clear
-            titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize)
+            setTitleColor(UIColor.systemBlue, for: .normal)
+            setTitleColor(UIColor.systemBlue.withAlphaComponent(0.5), for: .highlighted)
+            backgroundColor = AppConstants.kSecondaryColor
+            setFont(.regular)
+
         case .destructive:
             setTitleColor(UIColor.white, for: .normal)
             setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .highlighted)
             backgroundColor = AppConstants.kDestructiveColor
-            titleLabel?.font = UIFont.boldSystemFont(ofSize: UIFont.buttonFontSize)
+            setFont(.bold)
+        }
+    }
+
+    private func setFont(_ weight: UIFont.Weight) {
+        configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.systemFont(ofSize: 16, weight: weight)
+            return outgoing
         }
     }
 }

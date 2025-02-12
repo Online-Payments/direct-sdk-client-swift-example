@@ -161,7 +161,7 @@ class FormRowsConverter {
         case .phoneNumberKeyboard:
             keyboardType = .phonePad
 
-        case .stringKeyboard, .noKeyboard, .dateKeyboard:
+        case .stringKeyboard, .dateKeyboard:
             keyboardType = .default
         }
 
@@ -178,7 +178,7 @@ class FormRowsConverter {
         if field.identifier == "cardNumber" {
             if let confirmedPaymentProducts = confirmedPaymentProducts,
                confirmedPaymentProducts.contains(paymentItem.identifier) {
-                row.logo = paymentItem.displayHintsList.first?.logoImage ?? nil
+                row.logo = paymentItem.displayHints.first?.logoImage ?? nil
             } else {
                 row.logo = nil
             }
@@ -201,7 +201,7 @@ class FormRowsConverter {
             keyboardType = .emailAddress
         case .phoneNumberKeyboard:
             keyboardType = .phonePad
-        case .stringKeyboard, .noKeyboard, .dateKeyboard:
+        case .stringKeyboard, .dateKeyboard:
             keyboardType = .default
         }
 
@@ -274,6 +274,7 @@ class FormRowsConverter {
     func dateFormRow(from field: PaymentProductField, value: String, isEnabled: Bool) -> FormRowDate {
         let row = FormRowDate(paymentProductField: field, value: value)
         row.isEnabled = isEnabled
+
         return row
     }
 
@@ -290,20 +291,15 @@ class FormRowsConverter {
     func listFormRow(from field: PaymentProductField, value: String, isEnabled: Bool) -> FormRowList {
         let row = FormRowList(paymentProductField: field)
 
-        let valueMapping = field.displayHints.formElement.valueMapping
-        for item: ValueMappingItem in valueMapping where
-            (item.displayName != nil || item.displayElements.contains { $0.value != nil }) && item.value != nil {
-            row.items.append(item)
-        }
-
-        row.selectedRow = row.items.map({ $0.value }).firstIndex(of: value) ?? 0
+        row.selectedRow = 0
         row.isEnabled = isEnabled
+
         return row
     }
 
     func labelFormRow(from field: PaymentProductField) -> FormRowLabel {
         let labelValue = field.displayHints.label ?? "No label found"
+
         return FormRowLabel(text: labelValue)
     }
-
 }

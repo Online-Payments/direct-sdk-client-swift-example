@@ -60,7 +60,7 @@ class ButtonTableViewCell: TableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let width = self.accessoryAndMarginCompatibleWidth()
+        let width = accessoryAndMarginCompatibleWidth()
         let leftMargin = accessoryCompatibleLeftMargin()
         let height = contentView.frame.size.height
         button.frame = CGRect(x: leftMargin, y: buttonType == .secondary ? 6 : 12, width: width, height: height - 12)
@@ -69,5 +69,4 @@ class ButtonTableViewCell: TableViewCell {
     override func prepareForReuse() {
         button.removeTarget(nil, action: nil, for: .allEvents)
     }
-
 }

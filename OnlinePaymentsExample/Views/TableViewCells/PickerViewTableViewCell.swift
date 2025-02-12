@@ -12,12 +12,6 @@ class PickerViewTableViewCell: TableViewCell {
     var pickerView = PickerView()
     override class var reuseIdentifier: String { return "picker-view-cell" }
 
-    var items: [ValueMappingItem]? {
-        didSet {
-            pickerView.content = items?.map { $0.displayName! } ?? []
-        }
-    }
-
     var delegate: UIPickerViewDelegate? {
         get {
             return pickerView.delegate
@@ -71,7 +65,6 @@ class PickerViewTableViewCell: TableViewCell {
     }
 
     override func prepareForReuse() {
-        items = []
         delegate = nil
         dataSource = nil
         selectedRow = nil

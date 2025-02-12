@@ -33,33 +33,31 @@ class TableViewCell: UITableViewCell {
         if self.accessoryType != .none {
             if self.contentView.frame.width > self.frame.midX - 320/2 + 320 {
                 return 320
-            } else {
-                return self.contentView.frame.width - 16
             }
-        } else {
-            if self.contentView.frame.width > self.frame.midX - 320/2 + 320 + 16 + 22 + 16 {
-                return 320
-            } else {
-                return self.contentView.frame.width - 16 - 16
-            }
+
+            return self.contentView.frame.width - 16
         }
 
+        if self.contentView.frame.width > self.frame.midX - 320/2 + 320 + 16 + 22 + 16 {
+            return 320
+        }
+
+        return self.contentView.frame.width - 16 - 16
     }
 
     func accessoryCompatibleLeftMargin() -> CGFloat {
         if self.accessoryType != .none {
             if self.contentView.frame.width > self.frame.midX - 320/2 + 320 {
                 return self.frame.midX - 320/2
-            } else {
-                return 16
             }
-        } else {
-            if self.contentView.frame.width > self.frame.midX - 320/2 + 320 + 16 + 22 + 16 {
-                return self.frame.midX - 320/2
-            } else {
-                return 16
-            }
+
+            return 16
         }
 
+        if self.contentView.frame.width > self.frame.midX - 320/2 + 320 + 16 + 22 + 16 {
+            return self.frame.midX - 320/2
+        }
+
+        return 16
     }
 }

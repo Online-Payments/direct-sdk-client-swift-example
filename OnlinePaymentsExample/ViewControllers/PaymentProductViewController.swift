@@ -101,7 +101,11 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
     }
 
     @objc func tableViewTapped() {
-        UIApplication.shared.keyWindow?.endEditing(false)
+        if let windowScene = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+
+            windowScene.windows.first(where: { $0.isKeyWindow })?.endEditing(true)
+        }
     }
 
     func initializeHeader() {
@@ -328,13 +332,16 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
             ).raise()
         }
 
-        guard let cell = cell else {
+        guard let cell = cell
+        else {
             let emptyCell = TableViewCell()
             return emptyCell
         }
+
         cell.clipsToBounds = true
         return cell
     }
+
     func updateTextFieldCell(cell: TextFieldTableViewCell, row: FormRowTextField) {
         // Add error messages for cells
         cell.delegate = self
@@ -353,10 +360,8 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
     }
 
     func cell(for row: FormRowTextField, tableView: UITableView) -> TextFieldTableViewCell {
-        guard let cell =
-            tableView.dequeueReusableCell(
-                withIdentifier: TextFieldTableViewCell.reuseIdentifier
-            ) as? TextFieldTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.reuseIdentifier) as? TextFieldTableViewCell
+        else {
               fatalError("Could not cast cell to TextFieldTableViewCell")
         }
 
@@ -429,7 +434,6 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
 
         cell.delegate = self
         cell.dataSource = self
-        cell.items = row.items
         cell.selectedRow = row.selectedRow
         cell.readonly = !row.isEnabled
 
@@ -711,7 +715,7 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
         if fractionalString.count > 2 {
             let end = fractionalString.endIndex
             let start = fractionalString.index(end, offsetBy: -2)
-            fractionalString = fractionalString.substring(with: start..<end)
+            fractionalString = String(fractionalString[start..<end])
         }
 
         if string.count == 0 {
@@ -748,14 +752,8 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
     }
 
     func updateRow(withCurrencyValue currencyValue: String, forCell cell: CurrencyTableViewCell) {
-        cell.integerTextField.text =
-            currencyValue.substring(
-                to: currencyValue.index(currencyValue.startIndex, offsetBy: currencyValue.count - 2)
-            )
-        cell.fractionalTextField.text =
-            currencyValue.substring(
-                from: currencyValue.index(currencyValue.startIndex, offsetBy: currencyValue.count - 2)
-            )
+        cell.integerTextField.text = String(currencyValue.dropLast(2))
+        cell.fractionalTextField.text = String(currencyValue.suffix(2))
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -779,26 +777,25 @@ class PaymentProductViewController: UITableViewController, UITextFieldDelegate,
         _ pickerView: UIPickerView,
         attributedTitleForRow row: Int, forComponent component: Int
     ) -> NSAttributedString? {
-        guard let picker = pickerView as? PickerView else {
+        guard let picker = pickerView as? PickerView
+        else {
             fatalError("Could not cast picker to PickerView")
         }
+
         let item = picker.content[row]
-        let string = NSAttributedString(string: item)
-        return string
+
+        return NSAttributedString(string: item)
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         guard let cell = pickerView.superview as? PickerViewTableViewCell,
               let indexPath = tableView.indexPath(for: cell),
-              let formRow = formRows[indexPath.row] as? FormRowList else {
+              let formRow = formRows[indexPath.row] as? FormRowList
+        else {
             return
         }
 
-        if let picker = pickerView as? PickerView,
-           let selectedItem = cell.items?.first(where: { $0.displayName == picker.content[row] }) {
-            formRow.selectedRow = row
-            inputData.setValue(value: selectedItem.value, forField: formRow.paymentProductField.identifier)
-        }
+        formRow.selectedRow = 0
     }
 
     func validateData() {

@@ -20,11 +20,12 @@ class TableSectionConverter {
             let displayOrderA =
                 paymentItems.paymentItem(
                     withIdentifier: accountOnFileOne.paymentProductIdentifier
-                )?.displayHintsList[0].displayOrder ?? Int.max
+                )?.displayHints.first?.displayOrder ?? Int.max
             let displayOrderB =
                 paymentItems.paymentItem(
                     withIdentifier: accountOnFileTwo.paymentProductIdentifier
-                )?.displayHintsList[0].displayOrder ?? Int.max
+                )?.displayHints.first?.displayOrder ?? Int.max
+
             return displayOrderA < displayOrderB
         }) {
             if let product = paymentItems.paymentItem(withIdentifier: accountOnFile.paymentProductIdentifier) {
@@ -33,7 +34,7 @@ class TableSectionConverter {
                 row.name = displayName
                 row.accountOnFileIdentifier = accountOnFile.identifier
                 row.paymentProductIdentifier = accountOnFile.paymentProductIdentifier
-                if let displayHints = product.displayHintsList.first {
+                if let displayHints = product.displayHints.first {
                     row.logo = displayHints.logoImage
                 } else {
                     row.logo = nil
@@ -50,11 +51,10 @@ class TableSectionConverter {
         let section = PaymentProductsTableSection()
 
         for paymentItem in paymentItems.paymentItems.sorted(by: { (paymentItemOne, paymentItemTwo) -> Bool in
-            if paymentItemOne.displayHintsList.isEmpty == false && paymentItemTwo.displayHintsList.isEmpty == false {
-                return
-                    paymentItemOne.displayHintsList[0].displayOrder <
-                        paymentItemTwo.displayHintsList[0].displayOrder
+            if paymentItemOne.displayHints.isEmpty == false && paymentItemTwo.displayHints.isEmpty == false {
+                return paymentItemOne.displayHints[0].displayOrder < paymentItemTwo.displayHints[0].displayOrder
             }
+
             return paymentItemOne.identifier < paymentItemTwo.identifier
         }) {
             section.type = .gcPaymentProductType
@@ -72,7 +72,7 @@ class TableSectionConverter {
             row.name = paymentProductValue
             row.accountOnFileIdentifier = ""
             row.paymentProductIdentifier = paymentItem.identifier
-            if let displayHints = paymentItem.displayHintsList.first {
+            if let displayHints = paymentItem.displayHints.first {
                 row.logo = displayHints.logoImage
             } else {
                 row.logo = nil
@@ -87,9 +87,11 @@ class TableSectionConverter {
     static func localizationKey(with paymentItem: BasicPaymentItem) -> String {
         switch paymentItem {
         case is BasicPaymentProduct:
-            guard let displayHints = paymentItem.displayHintsList.first else {
+            guard let displayHints = paymentItem.displayHints.first
+            else {
                 return "Display hints not found"
             }
+
             return displayHints.label ?? "No label found"
         default:
             return ""

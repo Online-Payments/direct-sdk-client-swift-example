@@ -7,5 +7,5 @@
 import Foundation
 
 protocol PaymentFinishedTarget {
-    func didFinishPayment()
+    func didFinishPayment(_ encryptedCustomerInput: String)
 }
